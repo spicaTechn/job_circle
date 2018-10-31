@@ -17,7 +17,7 @@ class CreateJobsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('title')->default('title')->change();
+            $table->text('title');
             $table->text('description');
             $table->text('excerpt');
             $table->integer('job_type_id')->unsigned();

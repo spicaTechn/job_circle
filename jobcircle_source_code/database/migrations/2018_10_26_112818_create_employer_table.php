@@ -25,8 +25,8 @@ class CreateEmployerTable extends Migration
             $table->string('company_name',100)->nullable();
             $table->string('position',50)->nullable();
             $table->binary('profile_image_path',150)->nullable();
-            $table->integer('profile_setup_step',5)->default(0)->change();
-            $table->char('profile_setup_complete',1)->default(0)->change();
+            $table->integer('profile_setup_step')->default(0);
+            $table->char('profile_setup_complete')->default(0);
             $table->timestamps();
         });
     }

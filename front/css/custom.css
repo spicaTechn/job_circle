@@ -102,7 +102,7 @@ a {
     color: #666;
 }
 
-.navbar-light .navbar-nav .nav-link:focus, 
+.navbar-light .navbar-nav .nav-link:focus,
 .navbar-light .navbar-nav .nav-link:hover {
     color: #0071bd;
 }
@@ -866,8 +866,8 @@ a {
     background: #0071bd;
 }
 .category-section {
-    -webkit-transition: all 0.3s; 
-    transition: all 0.3s; 
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
 }
 
 .category-section:hover h4 a,
@@ -1292,7 +1292,7 @@ background: #0071bd;
     background: #fff;
     padding: 25px;
     /*box-shadow: 0 0 3px rgba(0,0,0,0.1);*/
-    
+
 }
 .login-form p {
 
@@ -1386,7 +1386,7 @@ background: #0071bd;
     text-align: center;
 }
 
-    
+
 
 .nav-tabs .nav-link {
     border: none;
@@ -1577,7 +1577,7 @@ label.hidden {
     color: #0071bd;
 }
 
-.get-job-email, 
+.get-job-email,
 .sidebar-form {
     background: #fff;
     padding: 30px;
@@ -1652,7 +1652,7 @@ label.hidden {
 }
 
 .dashboard-menu ul li:not(:last-child) a {
-  border-bottom: 1px solid #f3f8fe;  
+  border-bottom: 1px solid #f3f8fe;
 }
 
 .dashboard-menu ul li a:hover,
@@ -1773,7 +1773,7 @@ label.hidden {
 
 .customer-dashboard-body .table th,
 .customer-dashboard-body .table td {
-    border-right: 1px solid #dee2e6; 
+    border-right: 1px solid #dee2e6;
 }
 
 a.add-link, a.edit-link,a.delete,
@@ -1966,3 +1966,4 @@ a.add-link, a.edit-link,a.delete,
 .hide-navbar.show {
     display: block;
 }
+

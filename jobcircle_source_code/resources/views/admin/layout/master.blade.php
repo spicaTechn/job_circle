@@ -1,0 +1,6 @@
+@include('admin.include.header')
+@include('admin.include.topnav')
+@include('admin.include.mainnav')
+@yield('content')
+@yield('form_modal')
+@include('admin.include.footer')
