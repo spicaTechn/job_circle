@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/admin_assets/bower_components/file-input/css/fileinput.css') }}">
 <style type="text/css">
   /*wysisyg editor initial notification hiding*/
-#mceu_34 {
+#mceu_46 {
 
     display: none;
 }
@@ -37,59 +37,41 @@
                      </div>
                   </div>
                   <div class="card-block">
-                    <!-- <ul class="nav nav-tabs md-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                           <a class="nav-link active" id="top-tab" data-toggle="tab" href="#top" role="tab" aria-controls="top" aria-selected="true">Top Section</a>
-                           <div class="slide"></div>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" id="background-mission-tab" data-toggle="tab" href="#background-mission" role="tab" aria-controls="background-mission" aria-selected="true">Background/Mission Section</a>
-                           <div class="slide"></div>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" id="founder-tab" data-toggle="tab" href="#founder" role="tab" aria-controls="founder" aria-selected="true">Founder Section</a>
-                           <div class="slide"></div>
-                        </li>
-                    </ul> -->
-                    <form name="about-form" id="about-form">
+                    <form name="about-form" id="about-form" enctype="multipart/form-data">
                       @csrf
-                      <input type="hidden" name="about_id" class="about_id" value=""/>
-                      <input type="hidden" name="about_page_id" class="about_page_id" value=""/>
+                      <input type="hidden" name="about_id" class="about_id" value="{{ $company->id }}"/>
+                      <input type="hidden" name="page_detail_id" class="page_detail_id" value="{{ $page_details_id }}"/>
                       <div class="row">
                         <div class="col-sm-12 col-xl-12 m-b-30">
                           <h3>Top Section</h3>
                         </div>
                       </div>
-                      <form name="about-us" id="about-us" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="about_id" class="about_id" value=""/>
-                        <div class="row">
-                           <div class="col-sm-12 col-xl-12 m-b-30">
-                               <h4 class="sub-title">Description *</h4>
-                               <textarea   class="form-control about_description" id="about_description" name="about_description" placeholder="Description"></textarea>
-                               <input name="about_image" type="file" id="upload" class="hidden">
-                           </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-xl-12 m-b-30">
+                           <h4 class="sub-title">Description *</h4>
+                           <textarea   class="form-control about_description" id="about_description" name="about_description" placeholder="Description">{{ $company->description }}</textarea>
                         </div>
-                        <!-- <div class="row">
-                          <div class="col-sm-12 col-xl-12 m-b-30">
-                            <h4 class="sub-title">Image *</h4>
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                              <div class="fileinput-new thumbnail"  data-trigger="fileinput">
-                                <img src="{{asset('/front')}}/images/pages/about-image.jpg">
-                              </div>
-                              <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                              <div>
-                                <span class="btn btn-file btn-block btn-primary btn-sm">
-                                  <span class="fileinput-new">Select Profile Image</span>
-                                  <span class="fileinput-exists">Change</span>
-                                  <input name="about-image" accept="image/*" type="file">
-                                </span>
-                                <a href="#" class="btn btn-orange fileinput-exists btn-sm btn-block" data-dismiss="fileinput">Remove</a>
-                              </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-xl-12">
+                          <h4 class="sub-title">Image *</h4>
+                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail"  data-trigger="fileinput">
+                              <img src="{{asset('/front')}}/images/pages/company/{{ $meta_value_unserialize['about_image'] }}" id="about_image">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                            <div>
+                              <span class="btn btn-file btn-block btn-primary btn-sm">
+                                <span class="fileinput-new">Select Profile Image</span>
+                                <span class="fileinput-exists">Change</span>
+                                <input name="about_image" accept="image/*" type="file">
+                              </span>
+                              <a href="#" class="btn btn-orange fileinput-exists btn-sm btn-block" data-dismiss="fileinput">Remove</a>
                             </div>
                           </div>
-                        </div> -->
-                      <!-- <br>
+                        </div>
+                      </div>
+                      <br>
                       <div class="row">
                         <div class="col-sm-12 col-xl-12 m-b-30">
                           <h3>Background/Mission Section</h3>
@@ -98,15 +80,15 @@
                       <div class="row">
                         <div class="col-sm-6 col-xl-6 m-b-30">
                              <h4 class="sub-title">Background *</h4>
-                             <textarea   class="form-control background" name="background" placeholder="Backgroung"></textarea>
+                             <textarea   class="form-control background" style="height: 200px;" name="background" placeholder="Backgroung">{{ $meta_value_unserialize['background'] }}</textarea>
                          </div>
                          <div class="col-sm-6 col-xl-6 m-b-30">
                              <h4 class="sub-title">Mission *</h4>
-                             <textarea   class="form-control mission" name="mission" placeholder="Mission"></textarea>
+                             <textarea   class="form-control mission" style="height: 200px;" name="mission" placeholder="Mission">{{ $meta_value_unserialize['mission'] }}</textarea>
                          </div>
                       </div>
-                      <br> -->
-                      <!-- <div class="row">
+                      <br>
+                      <div class="row">
                         <div class="col-sm-12 col-xl-12 m-b-30">
                           <h3>Founder Section</h3>
                         </div>
@@ -114,38 +96,38 @@
                       <div class="row">
                         <div class="col-sm-6 col-xl-6 m-b-30">
                              <h4 class="sub-title">Name *</h4>
-                             <input type="text" class="form-control name" name="name" placeholder="Name" value="">
+                             <input type="text" class="form-control name" name="founder_name" placeholder="Name" value="{{ $meta_value_unserialize['founder_name'] }}">
                          </div>
                          <div class="col-sm-6 col-xl-6 m-b-30">
                              <h4 class="sub-title">Position *</h4>
-                             <input type="text" class="form-control position" name="position" placeholder="Position" value="">
+                             <input type="text" class="form-control position" name="founder_position" placeholder="Position" value="{{ $meta_value_unserialize['founder_position'] }}">
                          </div>
                       </div>
                       <div class="row">
-                           <div class="col-sm-12 col-xl-12 m-b-30">
-                               <h4 class="sub-title">Description *</h4>
-                               <textarea   class="form-control founder_description" name="founder_description" placeholder="Description"></textarea>
-                           </div>
+                        <div class="col-sm-12 col-xl-12 m-b-30">
+                           <h4 class="sub-title">Description *</h4>
+                           <textarea   class="form-control founder_description" style="height: 200px;" name="founder_description" placeholder="Description">{{ $meta_value_unserialize['founder_description'] }}</textarea>
                         </div>
-                        <div class="row">
-                          <div class="col-sm-12 col-xl-12 m-b-30">
-                            <h4 class="sub-title">Image *</h4>
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                              <div class="fileinput-new thumbnail"  data-trigger="fileinput">
-                                <img src="{{asset('/front')}}/images/pages/founder.jpg" id="founder_image">
-                              </div>
-                              <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                              <div>
-                                <span class="btn btn-file btn-block btn-primary btn-sm">
-                                  <span class="fileinput-new">Select Profile Image</span>
-                                  <span class="fileinput-exists">Change</span>
-                                  <input name="founder-image" accept="image/*" type="file">
-                                </span>
-                                <a href="#" class="btn btn-orange fileinput-exists btn-sm btn-block" data-dismiss="fileinput">Remove</a>
-                              </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-xl-12">
+                          <h4 class="sub-title">Image *</h4>
+                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail"  data-trigger="fileinput">
+                              <img src="{{asset('/front')}}/images/pages/company/{{ $meta_value_unserialize['founder_image'] }}" id="founder_image">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                            <div>
+                              <span class="btn btn-file btn-block btn-primary btn-sm">
+                                <span class="fileinput-new">Select Profile Image</span>
+                                <span class="fileinput-exists">Change</span>
+                                <input name="founder_image" accept="image/*" type="file">
+                              </span>
+                              <a href="#" class="btn btn-orange fileinput-exists btn-sm btn-block" data-dismiss="fileinput">Remove</a>
                             </div>
                           </div>
-                        </div> -->
+                        </div>
+                      </div>
 
                       <button  class="btn btn-grd-primary companyUpdate" id="companyUpdate">Update</button>
                       </form>
@@ -200,31 +182,17 @@ $(document).ready(function () {
     selector: "#about_description",
     theme: "modern",
     height : "400",
-    paste_data_images: true,
+    preformatted : true,
+    forced_root_block : false,
     plugins: [
       "advlist autolink lists link image charmap print preview hr anchor pagebreak",
       "searchreplace wordcount visualblocks visualchars code fullscreen",
       "insertdatetime media nonbreaking save table contextmenu directionality",
       "emoticons template paste textcolor colorpicker textpattern"
     ],
-    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link",
     toolbar2: "print preview media | forecolor backcolor emoticons",
-    image_advtab: true,
-    file_picker_callback: function(callback, value, meta) {
-      if (meta.filetype == 'image') {
-        $('#upload').trigger('click');
-        $('#upload').on('change', function() {
-          var file = this.files[0];
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            callback(e.target.result, {
-              alt: ''
-            });
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-    }
+
   });//end of tinymce
 
   $('#about-form').on('init.field.fv', function(e, data) {
@@ -253,22 +221,58 @@ $(document).ready(function () {
                     message: 'The description field is required'
                 }
             }
+        },
+        'background': {
+            validators: {
+                notEmpty: {
+                    message: 'The background field is required'
+                }
+            }
+        },
+        'mission': {
+            validators: {
+                notEmpty: {
+                    message: 'The mission field is required'
+                }
+            }
+        },
+        'founder_name': {
+            validators: {
+                notEmpty: {
+                    message: 'The name field is required'
+                }
+            }
+        },
+        'founder_description': {
+            validators: {
+                notEmpty: {
+                    message: 'The description field is required'
+                }
+            }
+        },
+        'founder_position': {
+            validators: {
+                notEmpty: {
+                    message: 'The position field is required'
+                }
+            }
         }
     }
-  });//end of contact information formvalidation
-
-  // storing contact information
-  $( ".companyUpdate" ).on( "click", function(e) {
+  }).on('success.form.fv', function(e) {
       e.preventDefault();
+      // saving tinymce value
+      tinyMCE.triggerSave();
 
-      // var id = $('.contact_id').val();
-      // //alert(id);
-      // if(id){
-      //  var URI = "{{url('/admin/pages/company')}}" + "/" + id;
-      // }
-      // else{
+      var id = $('.about_id').val();
+      //alert(id);
+      if(id)
+      {
+       var URI = "{{url('/admin/pages/company')}}" + "/" + id;
+      }
+      else
+      {
         var URI = "{{url('/admin/pages/company')}}";
-      // }
+      }
 
       // get the input values
       var result = new FormData($("#about-form")[0]);
@@ -283,15 +287,16 @@ $(document).ready(function () {
         type:"POST",
         success:function(data)
         {
-            if(data.status == "success"){
+            if(data.status == "success")
+            {
                 setTimeout(function() {
                           swal({
-                            title: "About Information   has been updated!",
-                            text: "A  about information   has been updated to Job Circle",
-                            type: "success",
+                            title:"About Information has been updated!",
+                            text:"A about information has been updated to Job Circle",
+                            type:"success",
                             closeOnConfirm: true,
                           }, function() {
-                              window.location = "{{route('admin.pages.contact')}}";
+                              window.location = "{{route('admin.pages.company')}}";
                           });
                 }, 1000);
 

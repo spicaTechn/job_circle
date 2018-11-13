@@ -8,4 +8,9 @@ class PageDetails extends Model
 {
     //
     protected $table = 'pageDetails';
+
+    public function page()
+    {
+        return  $this->belongsTo('App\Model\Pages\Page');
+    }
 }

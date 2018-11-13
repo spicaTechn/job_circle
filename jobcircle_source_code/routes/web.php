@@ -35,7 +35,34 @@ Route::prefix('admin')->group(function () {
 		'as'		=>	'admin.pages.services',
 		'uses'		=>	'Admin\Pages\Services\ServicesController@index'
 	]);
-
+	Route::get('/pages/services/getServices',[
+		'as'		=> 'admin.pages.services.getServices',
+		'uses'      => 'Admin\Pages\Services\ServicesController@getServices'
+	]);
+	Route::post('/pages/services',[
+		'as'        => 'admin.pages.services',
+		'uses'      => 'Admin\Pages\Services\ServicesController@store'
+	]);
+	Route::post('/pages/services/{id}',[
+		'as'        => 'admin.pages.services.id',
+		'uses'      => 'Admin\Pages\Services\ServicesController@update'
+	]);
+	Route::post('/pages/services',[
+		'as'        => 'admin.pages.services.serviceStore',
+		'uses'      => 'Admin\Pages\Services\ServicesController@serviceStore'
+	]);
+	Route::get('/pages/services/serviceEdit/{id}',[
+		'as'        => 'admin.pages.services.serviceEdit',
+		'uses'      => 'Admin\Pages\Services\ServicesController@serviceEdit'
+	]);
+	Route::post('/pages/services/serviceUpdate/{id}',[
+		'as'        => 'admin.pages.services.serviceUpdate',
+		'uses'      => 'Admin\Pages\Services\ServicesController@serviceUpdate'
+	]);
+	Route::get('/pages/services/serviceDelete/{id}',[
+		'as'        => 'admin.pages.services.serviceDelete',
+		'uses'      => 'Admin\Pages\Services\ServicesController@serviceDelete'
+	]);
 	// company=about page
 	Route::get('/pages/company', [
 		'as'		=>	'admin.pages.company',
@@ -44,6 +71,10 @@ Route::prefix('admin')->group(function () {
 	Route::post('/pages/company', [
 		'as'		=>	'admin.pages.company',
 		'uses'		=>	'Admin\Pages\Company\CompanyController@store'
+	]);
+	Route::post('/pages/company/{id}',[
+		'as'        => 'admin.pages.company.id',
+		'uses'      => 'Admin\Pages\Company\CompanyController@update'
 	]);
 
 	// contact page
