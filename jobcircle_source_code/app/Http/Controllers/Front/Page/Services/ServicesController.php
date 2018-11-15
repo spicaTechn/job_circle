@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front\Page\Services;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Pages\Page;
+use App\Model\Pages\PageDetails;
 
 class ServicesController extends Controller
 {
@@ -14,12 +16,32 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        //
+        $service_top_section = Page::where('slug','services-top-section')->first();
+        if(!empty($service_top_section)):
+            $service_top_section_details        = $service_top_section->page_details()->first();
+            $service_background_image           = $service_top_section_details->meta_value;
+        else:
+            $service_top_section                = new Page();
+            $service_background_image           = '';
+        endif;
+
+        $services   = Page::where('slug','service')->first();
+        if(!empty($services))
+        {
+            $service = $services;
+        }
+        else
+        {
+            $service = '';
+        }
         return view('front.page.services.services')
                     ->with(
                         array(
-                            'site_title'          =>    'Job Circle',
-                            'page_title'          =>    'Services',
+                            'site_title'                =>    'Job Circle',
+                            'page_title'                =>    'Services',
+                            'service_top_section'       =>    $service_top_section,
+                            'service_background_image'  =>    $service_background_image,
+                            'services'                  =>    $service
                         )
                     );
     }
@@ -53,7 +75,30 @@ class ServicesController extends Controller
      */
     public function show($id)
     {
-        //
+        $service             = PageDetails::findOrFail($id);
+        $service_unserialize = unserialize($service->meta_value);
+
+        $service_top_section = Page::where('slug','services-top-section')->first();
+        if(!empty($service_top_section)):
+            $service_top_section_details        = $service_top_section->page_details()->first();
+            $service_background_image           = $service_top_section_details->meta_value;
+        else:
+            $service_background_image           = '';
+        endif;
+
+        return view('front.page.single-page.single-service')
+               ->with
+               (
+                array
+                (
+                    'site_title'  =>    'Job Circle',
+                    'page_title'  =>    $service_unserialize['title'],
+                    'service'     =>    $service_unserialize,
+                    'service_background_image'  =>    $service_background_image,
+                            
+                )
+               );
+        //echo "<pre>"; print_r($service_unserialize);echo"</pre>";exit;
     }
 
     /**

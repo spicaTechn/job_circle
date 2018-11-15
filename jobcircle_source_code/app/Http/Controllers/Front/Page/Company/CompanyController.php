@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front\Page\Company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Pages\Page;
+use App\Model\Pages\PageDetails;
 
 class CompanyController extends Controller
 {
@@ -14,12 +16,25 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        //getting company all data and showing in view
+        $company = Page::where('slug','company')->first();
+        if(!empty($company)):
+            $company_details             = $company->page_details()->first();
+            $company_details_unserialize = unserialize($company_details->meta_value);
+        else:
+            $company                     = new Page();
+            $company                     = '';
+            $company_details_unserialize = new PageDetails();
+            $company_details_unserialize = '';
+        endif;
+
         return view('front.page.company.company')
                     ->with(
                         array(
                             'site_title'          =>    'Job Circle',
-                            'page_title'          =>    'Company'
+                            'page_title'          =>    'Company',
+                            'company'             =>    $company,
+                            'company_detail'      =>    $company_details_unserialize,
                         )
 
                     );

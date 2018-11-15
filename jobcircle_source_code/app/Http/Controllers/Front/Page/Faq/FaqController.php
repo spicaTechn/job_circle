@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front\Page\Faq;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Pages\Page;
+use App\Model\Pages\PageDetails;
 
 class FaqController extends Controller
 {
@@ -14,12 +16,21 @@ class FaqController extends Controller
      */
     public function index()
     {
-        //
+        $faqs   = Page::where('slug','faq')->first();
+        if(!empty($faqs))
+        {
+            $faq = $faqs;
+        }
+        else
+        {
+            $faq = '';
+        }
         return view('front.page.faq.faq')
                     ->with(
                         array(
                             'site_title'          =>    'Job Circle',
                             'page_title'          =>    'Faq',
+                            'faqs'                =>    $faq
                         )
                     );
     }

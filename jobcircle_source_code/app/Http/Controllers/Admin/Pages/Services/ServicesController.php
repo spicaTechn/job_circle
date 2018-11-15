@@ -73,15 +73,25 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //storing service data to page table
-        $title                = 'Services Top Section';
-        $slug                 = str_slug($title);
-        $service_description  = $request->input('service_description');
-        $service              = new Page();
-        $service->title       = $title;
-        $service->slug        = $slug; 
-        $service->description = $service_description;
-        $service->save();
+        $service_top          = Page::where('slug','services-top-section')->first();
+        if(!empty($service_top))
+        {
+            $page_id = $service_top->id;
+            $slug    = $service_top->slug;
+        }
+        else
+        {
+            //storing service data to page table
+            $title                = 'Services Top Section';
+            $slug                 = str_slug($title);
+            $service_description  = $request->input('service_description');
+            $service              = new Page();
+            $service->title       = $title;
+            $service->slug        = $slug; 
+            $service->description = $service_description;
+            $service->save();
+            $page_id              = $service->id;
+        }
 
         if($request->hasFile('service_background_image')) {
             $service_background            = $request->file('service_background_image');
@@ -92,11 +102,11 @@ class ServicesController extends Controller
         }
         else
         {
-            $service_background_image = 'abc.jpg';
+            $service_background_image = '';
         }
 
         $service_details_image             = new PageDetails();
-        $service_details_image->page_id    = $service->id;
+        $service_details_image->page_id    = $page_id;
         $service_details_image->meta_key   = $slug;
         $service_details_image->meta_value = $service_background_image;
         $service_details_image->save();

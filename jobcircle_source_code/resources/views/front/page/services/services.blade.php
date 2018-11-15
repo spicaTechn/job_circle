@@ -1,108 +1,50 @@
 @extends('front.layout.master')
 
 @section('content')
-<div class="inner-banner" style="background: url(front/images/banner.jpg);">
+@if(!empty($service_background_image))
+<div class="inner-banner" style="background: url({{asset('/front')}}/images/pages/services/{{ $service_background_image }});">
     <div class="container">
         <div class="banner-content">
             <h1>Our Services Sector </h1>
         </div>
     </div>
 </div>
+@endif
 <div class="main-service-categories">
     <div class="container">
-        <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem ab eligendi, placeat fugit labore quibusdam dolorem! Amet ab excepturi voluptates quod dicta repellendus, rerum est modi, voluptatum aliquam recusandae quisquam?</p>
-        <div class="services row">
+        <p class="text-center">{{ $service_top_section->description }}</p>
+        @if(!empty($services))
+        <div class="services row" style="min-height: 297px;">
+          <?php $page_details = $services->page_details; ?>
+            @foreach($page_details as $page_detail)
+            <?php $unserialize_value = unserialize($page_detail->meta_value); ?>
             <div class="item col-lg-3 col-md-4">
                 <div class="category-section">
                     <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
+                        <img src="{{asset('/front')}}/images/pages/services/{{ $unserialize_value['icon'] }}" alt="builder">
                     </div>
                     <div class="category-title">
-                        <h4>Builder</h4>
+                        <h4>{{ $unserialize_value['title'] }}</h4>
                     </div>
-                    <a href="#" class="category-overlay"></a>
+                    <a href="{{url('/services').'/'.$page_detail->id}}" class="category-overlay"></a>
                 </div>
             </div>
-
-            <div class="item col-lg-3 col-md-4">
-                <div class="category-section">
-                    <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
-                    </div>
-                    <div class="category-title">
-                        <h4>Builder</h4>
-                    </div>
-                    <a href="#" class="category-overlay"></a>
-                </div>
-            </div>
-            <div class="item col-lg-3 col-md-4">
-                <div class="category-section">
-                    <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
-                    </div>
-                    <div class="category-title">
-                        <h4>Builder</h4>
-                    </div>
-                    <a href="#" class="category-overlay"></a>
-                </div>
-            </div>
-            <div class="item col-lg-3 col-md-4">
-                <div class="category-section">
-                    <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
-                    </div>
-                    <div class="category-title">
-                        <h4>Builder</h4>
-                    </div>
-                    <a href="#" class="category-overlay"></a>
-                </div>
-            </div>
-            <div class="item col-lg-3 col-md-4">
-                <div class="category-section">
-                    <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
-                    </div>
-                    <div class="category-title">
-                        <h4>Builder</h4>
-                    </div>
-                    <a href="#" class="category-overlay"></a>
-                </div>
-            </div>
-            <div class="item col-lg-3 col-md-4">
-                <div class="category-section">
-                    <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
-                    </div>
-                    <div class="category-title">
-                        <h4>Builder</h4>
-                    </div>
-                    <a href="#" class="category-overlay"></a>
-                </div>
-            </div>
-            <div class="item col-lg-3 col-md-4">
-                <div class="category-section">
-                    <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
-                    </div>
-                    <div class="category-title">
-                        <h4>Builder</h4>
-                    </div>
-                    <a href="#" class="category-overlay"></a>
-                </div>
-            </div>
-            <div class="item col-lg-3 col-md-4">
-                <div class="category-section">
-                    <div class="icon-category">
-                        <img src="{{ asset('front/images/builder.png') }}" alt="builder">
-                    </div>
-                    <div class="category-title">
-                        <h4>Builder</h4>
-                    </div>
-                    <a href="#" class="category-overlay"></a>
-                </div>
-            </div>
-
+            @endforeach
         </div>
+        @else
+        <div class="about-overview" style="min-height: 297px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="overview-detail">
+                            <h3 style="line-height: 500%">No Services Found</span></h3>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 </div>
 @endsection

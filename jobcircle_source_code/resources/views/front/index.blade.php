@@ -1,35 +1,23 @@
 @extends('front.layout.master')
 
 @section('content')
+@if(!empty($sliders))
 <div class="banner owl-carousel owl-theme" id="banner">
+    <?php $page_details = $sliders->page_details; ?>
+    @foreach($page_details as $page_detail)
+    <?php $unserialize_value = unserialize($page_detail->meta_value); ?>
     <div class="item">
-        <img src="{{ asset('front/images/banner.jpg') }}" alt="banner">
+        <img src="{{asset('/front')}}/images/pages/home/{{ $unserialize_value['image'] }}" alt="banner">
         <div class="banner-caption">
             <div class="caption-wrapper">
-                <h2>Personal Protection</h2>
-                <p>We'll help you find the perfect solution, with expert advice on mortgages, medical insurance and pensions.</p>
+                <h2>{{ $unserialize_value['title'] }}</h2>
+                <p>{{ $unserialize_value['description'] }}</p>
             </div>
         </div>
     </div>
-    <div class="item">
-        <img src="{{ asset('front/images/banner.jpg') }}" alt="banner">
-        <div class="banner-caption">
-            <div class="caption-wrapper">
-                <h2>Personal Protection</h2>
-                <p>We'll help you find the perfect solution, with expert advice on mortgages, medical insurance and pensions.</p>
-            </div>
-        </div>
-    </div>
-    <div class="item">
-        <img src="{{ asset('front/images/banner.jpg') }}" alt="banner">
-        <div class="banner-caption">
-            <div class="caption-wrapper">
-                <h2>Personal Protection</h2>
-                <p>We'll help you find the perfect solution, with expert advice on mortgages, medical insurance and pensions.</p>
-            </div>
-        </div>
-    </div>
+    @endforeach
 </div>
+@endif
 <!-- end banner slider -->
 
 <div class="search-bar home-search-bar">
@@ -339,20 +327,20 @@
         </div>
     </div>
 </div>
+@if(!empty($company))
 <div class="about-us full-width">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <div class="full-width-image same-height">
-                    <img src="{{ asset('front/images/about-image.jpg') }}" alt="">
+                   <img src="{{asset('/front')}}/images/pages/company/{{ $company_detail['about_image'] }}">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="about-content same-height">
                     <h3>About Us</h3>
-                    <p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</p>
-                    <p>"There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."</p>
-                    <p>Nam ornare sed risus non viverra. Fusce tincidunt pharetra egestas. Aliquam malesuada vitae ligula eget efficitur. Vivamus sollicitudin fringilla augue sed consequat. Suspendisse sed turpis augue. Sed eleifend metus in ante auctor, id mattis velit ultrices. </p>
+                    
+                    <p>{{ $company->description }}</p>
                     <div class="more-about-us">
                         <a href="{{ asset('/company') }}" class="btn btn-default">More About Us</a>
                     </div>
@@ -361,6 +349,7 @@
         </div>
     </div>
 </div>
+@endif
 <!-- end about section -->
 <!-- what our client says -->
 <div class="what-our-client-says">

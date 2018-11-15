@@ -5,16 +5,18 @@
 	<div class="container">
 	    <div class="inner-page-wrapper">
 	        <div class="row">
+	        	@if(!empty($contact))
 	            <div class="col-md-6">
 	                <div class="contact-info-section">
 	                    <h2>contact information</h2>
 	                    <ul>
-	                        <li><a href="#"><i class="icon-phone"></i> +44 (0)207828 2188</a></li>
-	                        <li><a href="#"><i class="icon-envelope"></i> info@jobcirclelimited.com</a></li>
-	                        <li> <i class="icon-location-pin"></i> Address location</li>
+	                        <li><a href="#"><i class="icon-phone"></i> {{ $contact['phone'] }}</a></li>
+	                        <li><a href="#"><i class="icon-envelope"></i> {{ $contact['email'] }}</a></li>
+	                        <li> <i class="icon-location-pin"></i> {{ $contact['address'] }}</li>
 	                    </ul>
 	                </div>
 	            </div>
+	            @endif
 	            <div class="col-md-6">
 	                <div class="contact-info-section">
 	                    <h2>write to us</h2>

@@ -375,7 +375,7 @@ $(document).ready(function () {
     e.preventDefault();
     if(save_method == 'add')
     {
-      URI = "{{ route('admin.pages.services.serviceStore') }}";
+      URI = "{{URL::to('admin/pages/services/serviceStore')}}";
     }
     else
     {
@@ -512,7 +512,7 @@ $(document).ready(function () {
                             swal('Not found in server','The service does not exists','error');
                         }else if(jqXHR.status == '201')
                         {
-                            swal('Not allowed!!','The service cannot be deleted because its contains jobs.','error');
+                            swal('Not allowed!!','The service cannot.','error');
                         }
                     }
                 });

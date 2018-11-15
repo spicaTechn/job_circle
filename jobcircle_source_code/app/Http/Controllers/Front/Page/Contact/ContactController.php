@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front\Page\Contact;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Pages\Page;
+use App\Model\Pages\PageDetails;
 
 class ContactController extends Controller
 {
@@ -14,12 +16,20 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contact_details = PageDetails::where('meta_key','contact-us')->first();
+        // checkif contact  is empty or not if empty then set null value
+        if(!empty($contact_details)):
+            $contact_unserialize = unserialize($contact_details->meta_value);
+        else:
+            $contact_unserialize = new PageDetails();
+            $contact_unserialize = '';
+        endif;
         return view('front.page.contact.contact')
                     ->with(
                         array(
                             'site_title'          =>    'Job Circle',
                             'page_title'          =>    'Contact',
+                            'contact'             =>    $contact_unserialize,
                         )
                     );
     }

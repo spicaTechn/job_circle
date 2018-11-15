@@ -18,6 +18,7 @@ Route::get('/contact','Front\Page\Contact\ContactController@index');
 Route::get('/faq','Front\Page\Faq\FaqController@index');
 Route::get('/company','Front\Page\Company\CompanyController@index');
 Route::get('/services','Front\Page\Services\ServicesController@index');
+Route::get('/services/{id}','Front\Page\Services\ServicesController@show');
 Route::get('/find-a-job','Front\Page\FindJob\FindJobController@index');
 
 
@@ -30,24 +31,50 @@ Route::prefix('admin')->group(function () {
 	]);
 
 
-    // Route for all pages backend part
-	Route::get('/pages/services', [
-		'as'		=>	'admin.pages.services',
-		'uses'		=>	'Admin\Pages\Services\ServicesController@index'
+/************Route for all pages backend part************/
+	// home slider
+	Route::get('/pages/home',[
+		'as'		=>	'admin.pages.home',
+		'uses'		=>	'Admin\Pages\Home\HomeController@index'
 	]);
-	Route::get('/pages/services/getServices',[
-		'as'		=> 'admin.pages.services.getServices',
-		'uses'      => 'Admin\Pages\Services\ServicesController@getServices'
+	Route::post('/pages/home/sliderStore',[
+		'as'        => 'admin.pages.home.sliderStore',
+		'uses'      => 'Admin\Pages\Home\HomeController@sliderStore'
 	]);
-	Route::post('/pages/services',[
-		'as'        => 'admin.pages.services',
-		'uses'      => 'Admin\Pages\Services\ServicesController@store'
+	Route::get('/pages/home/sliderEdit/{id}',[
+		'as'        => 'admin.pages.home.sliderEdit',
+		'uses'      => 'Admin\Pages\Home\HomeController@sliderEdit'
 	]);
-	Route::post('/pages/services/{id}',[
-		'as'        => 'admin.pages.services.id',
-		'uses'      => 'Admin\Pages\Services\ServicesController@update'
+	Route::post('/pages/home/sliderUpdate/{id}',[
+		'as'        => 'admin.pages.home.sliderUpdate',
+		'uses'      => 'Admin\Pages\Home\HomeController@sliderUpdate'
 	]);
-	Route::post('/pages/services',[
+	Route::get('/pages/home/sliderDelete/{id}',[
+		'as'        => 'admin.pages.home.sliderDelete',
+		'uses'      => 'Admin\Pages\Home\HomeController@sliderDelete'
+	]);
+
+
+	// faq
+	Route::post('/pages/faq/',[
+		'as'        => 'admin.pages.faq',
+		'uses'      => 'Admin\Pages\Faq\FaqController@store'
+	]);
+	Route::get('/pages/faq/{id}',[
+		'as'        => 'admin.pages.faq',
+		'uses'      => 'Admin\Pages\Faq\FaqController@edit'
+	]);
+	Route::post('/pages/faq/{id}',[
+		'as'        => 'admin.pages.faq',
+		'uses'      => 'Admin\Pages\Faq\FaqController@update'
+	]);
+	Route::get('/pages/faq/{id}',[
+		'as'        => 'admin.pages.faq',
+		'uses'      => 'Admin\Pages\Faq\FaqController@destroy'
+	]);
+
+    // service
+    Route::post('/pages/services/serviceStore',[
 		'as'        => 'admin.pages.services.serviceStore',
 		'uses'      => 'Admin\Pages\Services\ServicesController@serviceStore'
 	]);
@@ -63,6 +90,21 @@ Route::prefix('admin')->group(function () {
 		'as'        => 'admin.pages.services.serviceDelete',
 		'uses'      => 'Admin\Pages\Services\ServicesController@serviceDelete'
 	]);
+	
+	Route::get('/pages/services', [
+		'as'		=>	'admin.pages.services',
+		'uses'		=>	'Admin\Pages\Services\ServicesController@index'
+	]);
+	Route::post('/pages/services',[
+		'as'        => 'admin.pages.services',
+		'uses'      => 'Admin\Pages\Services\ServicesController@store'
+	]);
+	Route::post('/pages/services/{id}',[
+		'as'        => 'admin.pages.services.id',
+		'uses'      => 'Admin\Pages\Services\ServicesController@update'
+	]);
+	
+
 	// company=about page
 	Route::get('/pages/company', [
 		'as'		=>	'admin.pages.company',
