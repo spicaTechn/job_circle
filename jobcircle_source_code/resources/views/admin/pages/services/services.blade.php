@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/admin_assets/bower_components/file-input/css/fileinput.css') }}">
 <style type="text/css">
   /*wysisyg editor initial notification hiding*/
-#mceu_34 {
+#mceu_46 {
 
     display: none;
 }
@@ -140,8 +140,8 @@
               </button>
           </div>
           <div class="modal-body" name="service-add-field" id="service-add-field">
-            <div class="row">
-               <div class="col-sm-6 col-xl-6 m-b-30">
+          
+            
                   <div class="row">
                      <div class="col-sm-12 col-xl-12 m-b-30">
                          <h4 class="sub-title">{{ __('Title *') }}</h4>
@@ -154,8 +154,8 @@
                          <textarea  class="form-control services_description" style="height: 144px;" name="services_description" placeholder="Description"></textarea>
                      </div>
                   </div>
-               </div>
-               <div class="col-sm-6 col-xl-6 m-b-30">
+              
+               
                   <div class="row">
                      <div class="col-sm-12 col-xl-12 m-b-30">
                          <h4 class="sub-title">{{ __('Icon *') }}</h4>
@@ -176,8 +176,8 @@
                          </div>
                      </div>
                   </div>
-               </div>
-            </div>
+               
+          
         </div>
         <div class="modal-footer">
            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
@@ -219,6 +219,24 @@
 <!-- Page wise Javascript code -->
 <script type="text/javascript">
 $(document).ready(function () {
+   // installing wysiwyg editor
+  tinymce.init({
+    selector: ".services_description",
+    theme: "modern",
+    height : "200",
+    preformatted : true,
+    forced_root_block : false,
+    plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table contextmenu directionality",
+      "emoticons template paste textcolor colorpicker textpattern"
+    ],
+    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link",
+    toolbar2: "print preview media | forecolor backcolor emoticons",
+
+  });//end of tinymce
+
   var save_method, uri;  
   // datatable for services
   var service_table = $('#tbl-services').DataTable({
@@ -373,6 +391,7 @@ $(document).ready(function () {
   })
   .on('success.form.fv', function(e) {
     e.preventDefault();
+    tinyMCE.triggerSave();
     if(save_method == 'add')
     {
       URI = "{{URL::to('admin/pages/services/serviceStore')}}";

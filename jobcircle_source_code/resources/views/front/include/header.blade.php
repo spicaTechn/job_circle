@@ -1,14 +1,3 @@
-<header class="header">
-    <div class="login-menu">
-        <ul>
-            <li><a href="mailto:support@jobcirclelimited.com"><i class="icon-cursor"></i> support@jobcirclelimited.com</a></li>
-            <li><a href="tel:+44(0)2078282188"><i class="icon-call-in"></i> +44 (0)207828 2188</a></li>
-            <li><a href="#" class="btn btn-default">Sign In</a></li>
-            <li><a href="#" class="btn btn-default">Employer/Post a job</a></li>
-        </ul>
-    </div>
-</header>
-<!-- end header -->
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ asset('/') }}"><img src="{{ asset('front/images/logo.png') }}" class="img-fluid"></a>

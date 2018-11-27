@@ -40,6 +40,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    // overriding showRegistrationForm method
+    public function showRegistrationForm()
+    {
+        return view('custom-auth.register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *

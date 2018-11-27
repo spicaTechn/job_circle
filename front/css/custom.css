@@ -1967,3 +1967,16 @@ a.add-link, a.edit-link,a.delete,
     display: block;
 }
 
+/*country select*/
+select.selectpicker.countrypicker.f16 {
+    height: 41px;
+    float: right;
+    margin-bottom: 39px;
+    width: 100%;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    outline: none;
+
+}
+

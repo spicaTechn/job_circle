@@ -39,16 +39,18 @@
                         </div>
                     </div>
                 </div>
+                @if(!empty($contact))
                 <div class="col-lg-3 col-md-6">
                     <div class="footter-section">
                         <h4>Agency Information</h4>
                         <div class="footer-contact">
-                            <p><i class="icon-location-pin"></i> Location Name</p>
-                            <p><a href="#"><i class="icon-call-in"></i> Phone Number</a></p>
-                            <p><a href="#"><i class="icon-cursor"></i> Email</a></p>
+                            <p><i class="icon-location-pin"></i>{{ $contact['address'] }}</p>
+                            <p><a href="callto://{{ $contact['phone'] }}"><i class="icon-call-in"></i> {{ $contact['phone'] }}</a></p>
+                            <p><a href="#"><i class="icon-cursor"></i> {{ $contact['email'] }}</a></p>
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -60,20 +62,23 @@
                         &copy; 2018 JobsCircle Ltd. All rights reserved.
                     </div>
                 </div>
+                @if(!empty($contact))
                 <div class="col-md-4">
                     <div class="footer-social-media">
                         <ul>
-                            <li><a href="#"><i class="icon-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="icon-social-twitter"></i></a></li>
+                            <li><a href="{{ $contact['facebook_link'] }}" target="_blank"><i class="icon-social-facebook"></i></a></li>
+                            <li><a href="{{ $contact['twitter_link'] }}" target="_blank"><i class="icon-social-twitter"></i></a></li>
                         </ul>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
 </div>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('front/js/jquery.nice-select.min.js') }}"></script>
 <script src="{{ asset('front/js/owl.carousel.min.js') }}"></script>

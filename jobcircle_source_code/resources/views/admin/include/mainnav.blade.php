@@ -13,7 +13,34 @@
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
-
+            <li class="{{Request::is('/job-category') ? 'active ' : '' }}">
+                <a href="{{ route('admin.job-category') }}">
+                    <span class="pcoded-micon"><i class="ti-layers-alt"></i><b>D</b></span>
+                    <span class="pcoded-mtext" >{{ __('Jobs Category')}}</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <li class="{{Request::is('/job-type') ? 'active ' : '' }}">
+                <a href="{{ route('admin.job-type') }}">
+                    <span class="pcoded-micon"><i class="ti-bag"></i><b>D</b></span>
+                    <span class="pcoded-mtext" >{{ __('Jobs Type')}}</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <li class="{{Request::is('/jobs') ? 'active ' : '' }}">
+                <a href="{{ route('admin.jobs') }}">
+                    <span class="pcoded-micon"><i class="ti-support"></i><b>D</b></span>
+                    <span class="pcoded-mtext" >{{ __('Jobs')}}</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <!-- <li class="{{Request::is('/adminjobs') ? 'active ' : '' }}">
+                <a href="{{ route('admin.adminjobs') }}">
+                    <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                    <span class="pcoded-mtext" >{{ __('Admin Jobs')}}</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li> -->
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="ti-plug"></i><b>{{ __('PAGES')}}</b></span>

@@ -7,6 +7,7 @@
     @yield('page_specific_css')
 </head>
 <body>
+	@include('front.include.topnav')
     @include('front.include.header')
     <!-- end header -->
 

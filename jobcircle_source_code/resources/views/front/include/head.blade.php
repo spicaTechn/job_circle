@@ -10,4 +10,4 @@
 <link rel="stylesheet" href="{{ asset('front/css/custom.css') }}">
 <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
 <link rel="icon"       href="{{ asset('/front/images/fav-icon.png') }}">
- <title>{{$site_title}} | {{$page_title}}</title>
+

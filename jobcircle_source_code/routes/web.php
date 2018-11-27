@@ -21,6 +21,31 @@ Route::get('/services','Front\Page\Services\ServicesController@index');
 Route::get('/services/{id}','Front\Page\Services\ServicesController@show');
 Route::get('/find-a-job','Front\Page\FindJob\FindJobController@index');
 
+/*Route for employer*/
+Route::get('/employer',[
+	'as'			=>	'employer.dashboard',
+	'uses'			=>	'Front\Employer\EmployerController@index'
+]);
+Route::any('/employer/jobStep1',[
+	'as'			=>	'employer.jobStep1',
+	'uses'			=>	'Front\Employer\EmployerController@jobStep1'
+]);
+Route::any('/employer/jobStep2',[
+	'as'			=>	'employer.jobStep2',
+	'uses'			=>	'Front\Employer\EmployerController@jobStep2'
+]);
+Route::any('/employer/jobStep3',[
+	'as'			=>	'employer.jobStep3',
+	'uses'			=>	'Front\Employer\EmployerController@jobStep3'
+]);
+// Route::any('/employer/jobStep4',[
+// 	'as'			=>	'employer.jobStep4',
+// 	'uses'			=>	'Front\Employer\EmployerController@jobStep4'
+// ]);
+Route::post('/employer',[
+	'as'			=>	'employer.store',
+	'uses'			=>	'Front\Employer\EmployerController@store'
+]);
 
 
 // Routes for admin section
@@ -29,8 +54,93 @@ Route::prefix('admin')->group(function () {
         'as'        =>'admin.dashboard',
         'uses'      =>'Admin\Dashboard\DashboardController@index'
 	]);
+	Route::get('/adminjobs',[
+		'as'		=> 'admin.adminjobs',
+		'uses'		=> 'Admin\AdminJobs\AdminJobsController@index'
+	]);
 
 
+	// Job Category route
+	Route::get('/job-category',[
+		'as'		=> 'admin.job-category',
+		'uses'		=> 'Admin\JobCategory\JobCategoryController@index'
+	]);
+	Route::post('/job-category',[
+		'as'		=> 'admin.job-category',
+		'uses'		=> 'Admin\JobCategory\JobCategoryController@store'
+	]);
+	Route::get('/job-category/{id}',[
+		'as'		=> 'admin.job-category.id',
+		'uses'		=> 'Admin\JobCategory\JobCategoryController@edit'
+	]);
+	Route::post('/job-category/{id}',[
+		'as'		=> 'admin.job-category.id',
+		'uses'		=> 'Admin\JobCategory\JobCategoryController@update'
+	]);
+	Route::delete('/job-category/{id}',[
+		'as'		=> 'admin.job-category.id',
+		'uses'		=> 'Admin\JobCategory\JobCategoryController@destroy'
+	]);
+	Route::get('/getJobCategory', [
+		'as'		=> 'admin.getJobCategory',
+		'uses'		=> 'Admin\JobCategory\JobCategoryController@getJobCategory'
+	]);
+
+	// Job Type route
+	Route::get('/job-type',[
+		'as'		=> 'admin.job-type',
+		'uses'		=> 'Admin\JobType\JobTypeController@index'
+	]);
+	Route::post('/job-type',[
+		'as'		=> 'admin.job-type',
+		'uses'		=> 'Admin\JobType\JobTypeController@store'
+	]);
+	Route::get('/job-type/{id}',[
+		'as'		=> 'admin.job-type.id',
+		'uses'		=> 'Admin\JobType\JobTypeController@edit'
+	]);
+	Route::post('/job-type/{id}',[
+		'as'		=> 'admin.job-type.id',
+		'uses'		=> 'Admin\JobType\JobTypeController@update'
+	]);
+	Route::delete('/job-type/{id}',[
+		'as'		=> 'admin.job-type.id',
+		'uses'		=> 'Admin\JobType\JobTypeController@destroy'
+	]);
+	Route::get('/getJobType', [
+		'as'		=> 'admin.getJobType',
+		'uses'		=> 'Admin\JobType\JobTypeController@getJobType'
+	]);
+
+
+
+	// Job route
+	Route::get('/jobs', [
+		'as'		=> 'admin.jobs',
+		'uses'		=> 'Admin\Jobs\JobsController@index'
+	]);
+	Route::post('/jobs',[
+		'as'		=> 'admin.jobs',
+		'uses'		=> 'Admin\Jobs\JobsController@store'
+	]);
+	Route::get('/jobs/getJobs',[
+		'as'		=>	'admin.jobs.getJobs',
+		'uses'		=>	'Admin\Jobs\JobsController@getJobs'
+	]);
+	Route::get('/jobs/getJobType', [
+		'as'		=> 'admin.jobs.getJobType',
+		'uses'		=> 'Admin\Jobs\JobsController@getJobType'
+	]);
+	Route::get('/jobs/getJobCategory', [
+		'as'		=> 'admin.jobs.getJobCategory',
+		'uses'		=> 'Admin\Jobs\JobsController@getJobCategory'
+	]);
+	Route::get('/jobs/{id}',[
+		'as'		=>	'admin.jobs.edit',
+		'uses'		=>  'Admin\Jobs\JobsController@edit'
+	]);
+
+	
 /************Route for all pages backend part************/
 	// home slider
 	Route::get('/pages/home',[
@@ -139,3 +249,7 @@ Route::prefix('admin')->group(function () {
 	]);
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
