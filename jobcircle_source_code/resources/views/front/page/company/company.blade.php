@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="about-page-content">
-                    <p>{{ $company->description }}</p>
+                    <p>{!! $company->description !!}</p>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -35,17 +35,13 @@
             <div class="tab-pane fade show active" id="background" role="tabpanel" aria-labelledby="home-tab">
                 <div class="inner-tab-wrapper">
                     <p>{{ $company_detail['background'] }}</p>
-                    <blockquote>
-                        {{ str_limit($company_detail['background'], 150) }}
-                    </blockquote>
+                    
                 </div>
             </div>
             <div class="tab-pane fade" id="mission" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="inner-tab-wrapper">
                     <p>{{ $company_detail['mission'] }}</p>
-                    <blockquote>
-                        {{ str_limit($company_detail['mission'], 150) }}
-                    </blockquote>
+                    
                 </div>
             </div>
         </div>
@@ -72,7 +68,7 @@
     </div>
 </div>
 @else
-<div class="about-overview" style="height: 301px;">
+<div class="about-overview" style="height: 303px;">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">

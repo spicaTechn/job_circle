@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Front\Page\Contact;
+namespace App\Http\Controllers\Front\Page\TermsConditions;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Pages\Page;
-use App\Model\Pages\PageDetails;
 
-class ContactController extends Controller
+class TermsConditionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,21 +15,27 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contact = Page::where('slug','contact')->first();
-        // checkif contact  is empty or not if empty then set null value
-        if(!empty($contact)):
-            $contact_details = $contact->page_details()->where('meta_key','contact')->first();
-            $contact_unserialize = unserialize($contact_details->meta_value);
-        else:
-            $contact_unserialize = new PageDetails();
-            $contact_unserialize = '';
-        endif;
-        return view('front.page.contact.contact')
+        $termsconditions = Page::where('slug','terms-conditions')->first();
+        $value = '';
+        if(!empty($termsconditions))
+        {
+            $value = $termsconditions;
+            $id    = $termsconditions->id;
+        }
+        else
+        {
+            $value = new Page();
+            $id    = '';
+        }
+        //echo "<pre>"; print_r($termsconditions); echo "</pre>"; exit;
+
+        return view('front.page.terms-conditions.termsconditions')
                     ->with(
                         array(
-                            'site_title'          =>    'Job Circle',
-                            'page_title'          =>    'Contact',
-                            'contact'             =>    $contact_unserialize,
+                            'site_title'      =>    'Job Circle',
+                            'page_title'      =>    'Terms & Conditons',
+                            'termsconditions' =>    $value,
+                            'id'              =>    $id
                         )
                     );
     }

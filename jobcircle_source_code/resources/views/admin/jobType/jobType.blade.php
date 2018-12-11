@@ -13,6 +13,13 @@
 
 <!-- File Input css -->
 <link rel="stylesheet" type="text/css" href="{{ asset('/admin_assets/bower_components/file-input/css/fileinput.css') }}">
+<style type="text/css">
+th, td {
+    white-space: normal;
+}
+</style>
+@endsection
+
 @section('content')
 <div class="pcoded-content">
 <div class="pcoded-inner-content">

@@ -22,32 +22,28 @@ class HomeController extends Controller
     public function index()
     {
         //
-        $sliders   = Page::where('slug','home-slider')->first();
-        if(!empty($sliders))
+        $home             = Page::where('slug','home')->first();
+        //echo "<pre>"; print_r($home->page_details); echo "</pre>";exit;
+
+        $slider           = '';
+        $background_image = '';
+        if(!empty($home))
         {
-            $slider = $sliders;
+            $slider           = $home->page_details()->where('meta_key','home-slider')->get();
+            $background_image = $home->page_details()->where('meta_key','home-search-job-background-image')->first();
         }
         else
         {
             $slider = '';
         }
-
-        $testimonials   = Page::where('slug','home-testimonial')->first();
-        if(!empty($testimonials))
-        {
-            $testimonial = $testimonials;
-        }
-        else
-        {
-            $testimonial = '';
-        }
+        //echo "<pre>"; print_r($background_image); echo "</pre>";exit;
         return view('admin.pages.home.home')
                 ->with(
                     array(
                         'site_title'     =>    'Job Circle',
                         'page_title'     =>    "Home",
                         'sliders'        =>    $slider,
-                        'testimonials'   =>    $testimonial
+                        'background_image'=>   $background_image
                         
                     )
                 );
@@ -123,7 +119,7 @@ class HomeController extends Controller
     {   
         // storing service in pages table
         //echo "<pre>"; print_r($request->all()); echo "</pre>";exit;
-        $home = Page::where('slug','home-slider')->first();
+        $home = Page::where('slug','home')->first();
         //echo "<pre>"; print_r($service->id); echo "</pre>";exit;
         if(!empty($home))
         {
@@ -132,7 +128,7 @@ class HomeController extends Controller
         }
         else
         {
-            $title            = 'Home Slider';
+            $title            = 'Home';
             $slug             = str_slug($title);
             $home             = new Page();
             $home->title      = $title;
@@ -251,6 +247,102 @@ class HomeController extends Controller
             return response()->json(array('status'=>'error','message'=>'Slider cannot be deleted now please try again later on'),200);
         }
         
+    }
+
+    public function backgroundImageStore(Request $request)
+    {
+        //echo "<pre>"; print_r($request->all()); echo "</pre>";exit;
+        $page  = Page::where('slug','home')->first();
+        if(!empty($page))
+        {
+            $page_id          = $page->id;
+            
+            // checking if request has image
+            if($request->hasFile('background_image')) 
+            {
+                $icon               = $request->file('background_image');
+                $icon_name          = str_random(20).'.'.$icon->getClientOriginalExtension();
+                $destinationPath    = $this->image_path;
+                $icon->move($destinationPath, $icon_name);
+                $background_image       = $icon_name;
+            }
+            else
+            {
+                $background_image       = 'hello.jpg';
+            }
+
+            $page_details             = new PageDetails();
+            $page_details->page_id    = $page_id;
+            $page_details->meta_key   = 'home-search-job-background-image';
+            $page_details->meta_value = $background_image;
+            $page_details->save();
+
+            return response()->json(array('status'=>'success','result'=>'successfully added the Background Image  in the jobcircle '),200);
+        }
+        else
+        {
+            $title                      = 'Home';
+            $slug                       = str_slug($title);
+            $background_image           = new Page();
+            $background_image->title    = $title;
+            $background_image->slug     = $slug; 
+            $background_image->save();
+
+            $page_id          = $background_image->id;
+            
+            // checking if request has image
+            if($request->hasFile('background_image')) 
+            {
+                $icon               = $request->file('background_image');
+                $icon_name          = str_random(20).'.'.$icon->getClientOriginalExtension();
+                $destinationPath    = $this->image_path;
+                $icon->move($destinationPath, $icon_name);
+                $background_image       = $icon_name;
+            }
+            else
+            {
+                $background_image       = 'hello.jpg';
+            }
+
+            $page_details             = new PageDetails();
+            $page_details->page_id    = $page_id;
+            $page_details->meta_key   = 'home-search-job-background-image';
+            $page_details->meta_value = $background_image;
+            $page_details->save();
+
+            return response()->json(array('status'=>'success','result'=>'successfully added the Background Image  in the jobcircle '),200);
+        }
+    }
+
+
+    public function backgroundImageUpdate(Request $request, $id)
+    {
+        $id      = $request->input('id');
+        $page_id = $request->input('page_id');
+        $image   = PageDetails::findOrFail($id);
+        
+        // checking if request has image
+        if($request->hasFile('background_image')) 
+        {
+            $icon               = $request->file('background_image');
+            $icon_name          = str_random(20).'.'.$icon->getClientOriginalExtension();
+            $destinationPath    = $this->image_path;
+            $icon->move($destinationPath, $icon_name);
+            $background_image       = $icon_name;
+
+            $path=$this->image_path.'/'.$image->meta_value;
+            File::delete($path);
+        }
+        else
+        {
+            $background_image       = $image->meta_value;
+        }
+
+        $page_details             = PageDetails::find($id);
+        $page_details->meta_value = $background_image;
+        $page_details->save();
+
+        return response()->json(array('status'=>'success','result'=>'successfully updated the Background Image  in the jobcircle '),200);
     }
 
 }

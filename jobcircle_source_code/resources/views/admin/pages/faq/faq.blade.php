@@ -19,6 +19,9 @@
 
     display: none;
 }
+td {
+    white-space: normal;
+}
 </style>
 @endsection
 @section('content')
@@ -231,7 +234,7 @@ $(document).ready(function () {
     e.preventDefault();
     if(save_method == 'add')
     {
-      URI = "{{ route('admin.pages.faq') }}";
+      URI = "{{ route('admin.pages.faq.store') }}";
     }
     else
     {
@@ -334,7 +337,7 @@ $(document).ready(function () {
             if(isConfirm){
                 //make ajax request 
                 $.ajax({
-                    url:"{{URL::to('admin/pages/faq')}}" + "/" + faq_id,
+                    url:"{{URL::to('admin/pages/faq/destroy')}}" + "/" + faq_id,
                     type:"GET",
                     dataType:"Json",
                     data:{_token:"{{csrf_token()}}"},

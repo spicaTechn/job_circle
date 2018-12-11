@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class JobType extends Model
 {
      protected $table = 'jobtypes';
+
+    public function job()
+    {
+        return $this->belongsTo('App\Model\Job');
+    }
 }

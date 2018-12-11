@@ -16,23 +16,28 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $service_top_section = Page::where('slug','services-top-section')->first();
-        if(!empty($service_top_section)):
-            $service_top_section_details        = $service_top_section->page_details()->first();
-            $service_background_image           = $service_top_section_details->meta_value;
-        else:
-            $service_top_section                = new Page();
-            $service_background_image           = '';
-        endif;
+        
 
         $services   = Page::where('slug','service')->first();
+        $service_top_section = '';
         if(!empty($services))
         {
             $service = $services;
+            $service_top_section = $service->page_details()->where('meta_key','services-top-image')->first();
+            if(!empty($service_top_section)):
+                $service_top_section_details        = $service_top_section;
+                $service_background_image           = $service_top_section_details->meta_value;
+            else:
+                $service_top_section                = new Page();
+                $service_background_image           = '';
+            endif;
         }
         else
         {
             $service = '';
+
+            $service_top_section                = '';
+            $service_background_image           = '';
         }
         return view('front.page.services.services')
                     ->with(

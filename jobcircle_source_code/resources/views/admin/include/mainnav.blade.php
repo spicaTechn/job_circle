@@ -69,8 +69,8 @@
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                    <li class="">
-                        <a href="">
+                    <li class="{{ Request::is('admin.pages.terms-conditions') }}">
+                        <a href="{{ route('admin.pages.terms-conditions') }}">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext" >{{ __('Terms & Conditions')}}</span>
                             <span class="pcoded-mcaret"></span>

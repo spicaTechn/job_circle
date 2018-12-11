@@ -17,7 +17,7 @@ class ContactController extends Controller
     public function index()
     {
         //getting all contact information from db and showing in view
-        $contact_details = PageDetails::where('meta_key','contact-us')->first();
+        $contact_details = PageDetails::where('meta_key','contact')->first();
 
         // checkif contact  is empty or not if empty then set null value
         if(!empty($contact_details)):
@@ -66,7 +66,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         // storing contact  information to page table
-        $title           = 'Contact US';
+        $title           = 'Contact';
         $slug            = str_slug($title);
 
         $address         = $request->input('address');

@@ -56,12 +56,10 @@
                           </thead>
                           <tbody>
                           @if($sliders)
-                          <?php $page_details = $sliders->page_details; 
-                            $i=1;
-                          ?>
+                            <?php $i=1; ?>
                           
-                            @foreach($page_details as $page_detail)
-                            <?php $unserialize_value = unserialize($page_detail->meta_value); ?>
+                            @foreach($sliders as $slider)
+                            <?php $unserialize_value = unserialize($slider->meta_value); ?>
 
                             <tr>
                               <td>{{ $i }}</td>
@@ -71,9 +69,9 @@
                               <td>{{ $unserialize_value['title'] }}</td>
                               <td>{{ $unserialize_value['description'] }}</td>
                               <td>
-                                <a href="javascript:void(0);" class="m-r-15 text-muted edit-slider" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" data-slider-id="{{ $page_detail->id }}"><i class="icofont icofont-ui-edit"></i></a>
+                                <a href="javascript:void(0);" class="m-r-15 text-muted edit-slider" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" data-slider-id="{{ $slider->id }}"><i class="icofont icofont-ui-edit"></i></a>
 
-                                <a href="javascript:void(0);" class="text-muted delete-slider" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" data-slider-id="{{ $page_detail->id }}"><i class="icofont icofont-delete-alt"></i></a>
+                                <a href="javascript:void(0);" class="text-muted delete-slider" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" data-slider-id="{{ $slider->id }}"><i class="icofont icofont-delete-alt"></i></a>
                               </td>
                             </tr>
                             <?php $i++; ?>
@@ -83,7 +81,48 @@
                       </table>
                     </div>
                   </div>
-                  
+                  <div class="card-block">
+                    <div class="row">
+                      <div class="col-sm-12 col-xl-12 m-b-30"> 
+                        <h4>Search Jobs By Category Background Image</h4>
+                      </div>
+                    </div>
+                     <form role="form" name="background-image-form" id="background-image-form" enctype="multipart/form-data">
+                      @csrf
+                      @if(!empty($background_image))
+                      <input type="hidden" name="id" class="id" value="{{ $background_image->id }}">
+                      <input type="hidden" name="page_id" class="page_id" value="{{ $background_image->page_id }}">
+                      @endif
+                      <div class="row">
+                        <div class="col-sm-12 col-xl-12 m-b-30">
+                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                              <div class="fileinput-new thumbnail" data-trigger="fileinput">
+                               @if(!empty($background_image))
+                               <img src="{{asset('/front')}}/images/pages/home/{{$background_image->meta_value}}" id="background_image">
+                               @else
+                               <img src="{{asset('/front')}}/images/pages/home/slider.jpg" id="background_image">
+                               @endif
+                               </div>
+                               <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height:177px;">
+                               </div>
+                               <div>
+                                 <span class="btn btn-file btn-block btn-primary btn-sm">
+                                   <span class="fileinput-new">Select Profile Image</span>
+                                   <span class="fileinput-exists">Change</span>
+                                   <input name="background_image" id="background_image" class="form-control background_image" accept="image/*" type="file" />
+                                 </span>
+                                 <a href="#" class="btn btn-orange fileinput-exists btn-sm btn-block" data-dismiss="fileinput">Remove</a>
+                               </div>
+                           </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-xl-12 m-b-30">
+                          <button type="submit"  class="btn btn-primary waves-effect waves-light backgroundImageUpdate">Update changes</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                </div>
             </div>
          </div>
@@ -424,7 +463,50 @@ $(document).ready(function () {
 
     }); // end delete service click
   /*end of slider section */
+  $("body").on('click','.backgroundImageUpdate', function(e){
+    e.preventDefault();
+    var id      = $('.id').val();
+    var page_id = $('.page_id').val();
+    
+    if(id)
+    {
+      URI = "{{URL::to('admin/pages/home/backgroundImageUpdate')}}" + "/" + id;
+    }
+    else
+    {
+        URI = "{{ route('admin.pages.home.backgroundImageStore') }}";
+    }
 
+    //get form data
+    result = new FormData($('#background-image-form')[0]);
+
+    $.ajax({
+
+      url:URI,
+      data:result,
+      dataType:"json",
+      contentType: false,
+      processData: false,
+      type:"POST",
+      success:function(data)
+      {
+        if(data.status == "success")
+        {
+            setTimeout(function() {
+                          swal({
+
+                            title:"Background Image  has been added to Job Circle!",
+                            text:"A background image  has been added to Job Circle",
+                            type:"success",
+                            closeOnConfirm: true,
+                          }, function() {
+                              window.location = "{{route('admin.pages.home')}}";
+                          });
+                }, 1000);
+          }
+        }
+    });
+  });//end of home search job by category background image
 
 
 });//end of document.ready

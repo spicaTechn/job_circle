@@ -18,6 +18,10 @@
 
     display: none;
 }
+table.dataTable.nowrap th, table.dataTable.nowrap td 
+{
+    white-space: normal;
+}
 </style>
 @endsection
 @section('content')
@@ -39,11 +43,11 @@
                     <form role="form" name="service-topsection-form" id="service-topsection-form" enctype="multipart/form-data">
                       @csrf
                       <input type="hidden" name="service_topsection_id" class="service_topsection_id" value="{{ $service_top_section->id }}"/>
-                      <input type="hidden" name="service_topsection_page_id" class="service_topsection_page_id" value="{{ $service_top_secton_page_details_id }}"/>
+                      <input type="hidden" name="service_topsection_page_id" class="service_topsection_page_id" value="{{ $service_top_section->page_id }}"/>
                       <div class="row">
                         <div class="col-sm-6 col-xl-6 m-b-30">
                            <h4 class="sub-title">Services Description *</h4>
-                           <textarea   class="form-control service_description" id="service_description" name="service_description" placeholder="Description" style="height: 350px;">{{ $service_top_section->description }}</textarea>
+                           <textarea   class="form-control service_description" id="service_description" name="service_description" placeholder="Description" style="height: 350px;">{!! $services->description !!}</textarea>
                         </div>
                         <div class="col-sm-6 col-xl-6 m-b-30">
                            <h4 class="sub-title">{{ __('Service Background Image  *') }}</h4>
@@ -87,7 +91,7 @@
                           </thead>
                           <tbody>
                           @if($services)
-                          <?php $page_details = $services->page_details; 
+                          <?php $page_details = $services->page_details()->where('meta_key','service')->get(); 
                             $i=1;
                           ?>
                           
@@ -100,7 +104,7 @@
                                 <img src="{{asset('/front')}}/images/pages/services/{{ $unserialize_value['icon'] }}" style="height: 40px; width: 40px;">
                               </td>
                               <td>{{ $unserialize_value['title'] }}</td>
-                              <td>{{ $unserialize_value['description'] }}</td>
+                              <td>{!! $unserialize_value['description'] !!}</td>
                               <td>
                                 <a href="javascript:void(0);" class="m-r-15 text-muted edit-service" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" data-service-id="{{ $page_detail->id }}"><i class="icofont icofont-ui-edit"></i></a>
 
@@ -241,7 +245,7 @@ $(document).ready(function () {
   // datatable for services
   var service_table = $('#tbl-services').DataTable({
       dom: 'Bfrtip',
-      LengthChange: true,
+      LengthChange: false,
       buttons:[
           'excel',
           {
@@ -470,7 +474,9 @@ $(document).ready(function () {
               $(".services_id").val(data.service_id);
               $(".services_page_id").val(data.page_id);
               $(".services_title").val(data.result.title);
-              $(".services_description").val(data.result.description);
+              //$(".services_description").val(data.result.description);
+              var content = tinymce.activeEditor.setContent(data.result.description);
+              $("textarea.services_description").val(content);
               var image="{{asset('/front')}}/images/pages/services" + "/" +data.result.icon;
               $("#services_icon").attr('src',image);
               $('.modal-title').text('Update Service');

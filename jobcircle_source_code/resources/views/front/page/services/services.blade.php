@@ -12,10 +12,12 @@
 @endif
 <div class="main-service-categories">
     <div class="container">
-        <p class="text-center">{{ $service_top_section->description }}</p>
+        @if(!empty($services))
+        <p class="text-center">{{ $services->description }}</p>
+        @endif
         @if(!empty($services))
         <div class="services row" style="min-height: 297px;">
-          <?php $page_details = $services->page_details; ?>
+          <?php $page_details = $services->page_details()->where('meta_key','service')->get(); ?>
             @foreach($page_details as $page_detail)
             <?php $unserialize_value = unserialize($page_detail->meta_value); ?>
             <div class="item col-lg-3 col-md-4">
@@ -32,12 +34,12 @@
             @endforeach
         </div>
         @else
-        <div class="about-overview" style="min-height: 297px;">
+        <div class="about-overview" style="min-height: 347px;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="overview-detail">
-                            <h3 style="line-height: 500%">No Services Found</span></h3>
+                            <h3 style="margin-top: 100px;">No Services Found</span></h3>
                         </div>
                     </div>
                     

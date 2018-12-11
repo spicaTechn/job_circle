@@ -3,9 +3,9 @@
 @section('content')
 @if(!empty($sliders))
 <div class="banner owl-carousel owl-theme" id="banner">
-    <?php $page_details = $sliders->page_details; ?>
-    @foreach($page_details as $page_detail)
-    <?php $unserialize_value = unserialize($page_detail->meta_value); ?>
+   
+    @foreach($sliders as $slider)
+    <?php $unserialize_value = unserialize($slider->meta_value); ?>
     <div class="item">
         <img src="{{asset('/front')}}/images/pages/home/{{ $unserialize_value['image'] }}" alt="banner">
         <div class="banner-caption">
@@ -65,151 +65,85 @@
                 </div>
             </div>
             <!-- end row -->
-            <div class="category-section">
-                <h4><a>Nanny / HouseKeeper lives in</a></h4>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Location:</b>  Manchester, London</p>
+            @if(!empty($jobs))
+             @foreach($jobs as $job)
+                <div class="category-section">
+                    <h4><a>{{ $job->title }}</a></h4>
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="job-list">
+                                        <?php $job_address = $job->job_address()->where('job_id',$job->id)->first(); ?>
+
+                                        <p><i class="icon-location-pin"></i><b>Location:</b>  {{ $job_address->address }}, {{ $job_address->country }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Salary:</b>  $20 / Hour</p>
+                                <div class="col-md-6">
+                                    <div class="job-list">
+                                        <?php 
+                                            $salary_type = ''; 
+                                            if($job->salary_type == 0)
+                                            {
+                                                $salary_type = 'Per Hour';
+                                            }
+                                            elseif($job->salary_type == 1)
+                                            {
+                                                $salary_type = 'Per Week';
+                                            }
+                                            elseif($job->salary_type == 2)
+                                            {
+                                                $salary_type = 'Per Month';
+                                            }
+                                            else
+                                            {
+                                                $salary_type = 'Per Year';
+                                            }
+
+                                        ?>
+                                        <p><i class="icon-location-pin"></i><b>Salary:</b>  ${{ $job->salary }} / {{ $salary_type }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-clock"></i><b>Job Type:</b>  Part Time Job</p>
+                                <div class="col-md-6">
+                                    <div class="job-list">
+                                        <?php $job_type = DB::table('jobtypes')->where('id',$job->job_type_id)->first(); ?>
+                                        <p><i class="icon-clock"></i><b>Job Type:</b>  {{ $job_type->title }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-tag"></i><b>Job Category:</b>  HouseKeeper / Nanny</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="view-job">
-                            <a href="#" class="btn btn-default">View Job</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- category-section -->
-            <div class="category-section">
-                <h4><a>Nanny / HouseKeeper lives in</a></h4>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Location:</b>  Manchester, London</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Salary:</b>  $20 / Hour</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-clock"></i><b>Job Type:</b>  Part Time Job</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-tag"></i><b>Job Category:</b>  HouseKeeper / Nanny</p>
+                                <div class="col-md-6">
+                                    <div class="job-list">
+                                        <?php $job_category = DB::table('jobcategories')->where('id',$job->job_category_id)->first(); ?>
+                                        <p><i class="icon-tag"></i><b>Job Category:</b>  {{ $job_category->name }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="view-job">
-                            <a href="#" class="btn btn-default">View Job</a>
+                        <div class="col-lg-3">
+                            <div class="view-job">
+                                <a href="#" class="btn btn-default">View Job</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- category-section -->
-            <div class="category-section">
-                <h4><a>Nanny / HouseKeeper lives in</a></h4>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Location:</b>  Manchester, London</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Salary:</b>  $20 / Hour</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-clock"></i><b>Job Type:</b>  Part Time Job</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-tag"></i><b>Job Category:</b>  HouseKeeper / Nanny</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="view-job">
-                            <a href="#" class="btn btn-default">View Job</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- category-section -->
-            <div class="category-section">
-                <h4><a>Nanny / HouseKeeper lives in</a></h4>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Location:</b>  Manchester, London</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-location-pin"></i><b>Salary:</b>  $20 / Hour</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-clock"></i><b>Job Type:</b>  Part Time Job</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="job-list">
-                                    <p><i class="icon-tag"></i><b>Job Category:</b>  HouseKeeper / Nanny</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="view-job">
-                            <a href="#" class="btn btn-default">View Job</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- category-section -->
+             @endforeach
+            @endif
+           
         </div>
     </div>
 </div>
 <!-- end filter section -->
-<div class="job-search-by-category" style="background: url(images/carousel.jpg) no-repeat;">
+<?php 
+$image = '';
+if(!empty($background_image)) 
+{
+    $image = $background_image->meta_value;
+}
+else
+{
+    $image = '';
+}
+?>
+<div class="job-search-by-category" style="background: url({{ asset('/front/images/pages/home'.'/'.$image) }}) no-repeat;">
     <div class="container">
         <h3>Search Jobs By Category</h3>
         <div class="owl-theme owl-carousel" id="job-category-carousel">
@@ -340,7 +274,7 @@
                 <div class="about-content same-height">
                     <h3>About Us</h3>
                     
-                    <p>{{ $company->description }}</p>
+                    <p>{{ $company_detail['background'] }}</p>
                     <div class="more-about-us">
                         <a href="{{ asset('/company') }}" class="btn btn-default">More About Us</a>
                     </div>

@@ -21,33 +21,35 @@ class ServicesController extends Controller
     {
         //
         $services   = Page::where('slug','service')->first();
+        //echo "<pre>"; print_r($services->page_details); echo "</pre>";exit;
+        $service_top_section = '';
+        
         if(!empty($services))
         {
-            $service = $services;
+            $service             = $services;
+            $service_top_section = $service->page_details()->where('meta_key','services-top-image')->first();
+            //echo "<pre>"; print_r($service_top_section); echo "</pre>";exit;
+            if(!empty($service_top_section)):
+                $service_top_section_details        = $service_top_section;
+                $service_background_image           = $service_top_section_details->meta_value;
+                // echo "<pre>"; print_r($page_details_id);echo"</pre>";exit;
+            else:
+                $service_top_section                = new Page();
+                $service_background_image           = '';
+            endif;
         }
         else
         {
-            $service = '';
+            $service = new Page();
+            $service_top_section         = new Page();
+            $service_background_image    = '';
         }
 
-        $service_top_section = Page::where('slug','services-top-section')->first();
-        if(!empty($service_top_section)):
-            $service_top_section_details        = $service_top_section->page_details()->first();
-            $service_top_secton_page_details_id = $service_top_section_details->id;
-            $service_background_image           = $service_top_section_details->meta_value;
-            // echo "<pre>"; print_r($page_details_id);echo"</pre>";exit;
-        else:
-            $service_top_section                = new Page();
-            $service_top_secton_page_details_id = '';
-            $service_background_image           = '';
-        endif;
-        
         return view('admin.pages.services.services')
                 ->with(
                     array(
                         'site_title'                          =>    'Job Circle',
                         'page_title'                          =>    "Services",
-                        'service_top_secton_page_details_id'  =>    $service_top_secton_page_details_id,
                         'service_top_section'                 =>    $service_top_section,
                         'service_background_image'            =>    $service_background_image,
                         'services'                            =>    $service
@@ -73,45 +75,73 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        $service_top          = Page::where('slug','services-top-section')->first();
-        if(!empty($service_top))
+        $service_page         = Page::where('slug','service')->first();
+        //echo "<pre>"; print_r($service_page); echo "</pre>";exit;
+        
+        if(!empty($service_page))
         {
-            $page_id = $service_top->id;
-            $slug    = $service_top->slug;
+           
+            $page_id = $service_page->id;
+            $slug    = 'services-top-image';
+
+            if($request->hasFile('service_background_image')) 
+            {
+                $service_background            = $request->file('service_background_image');
+                $service_background_image_name = str_random(20).'.'.$service_background->getClientOriginalExtension();
+                $destinationPath               = $this->image_path;
+                $service_background->move($destinationPath, $service_background_image_name);
+                $service_background_image      = $service_background_image_name;
+
+            }
+            else
+            {
+                $service_background_image = '';
+            }
+
+            $service_details_image             = new PageDetails();
+            $service_details_image->page_id    = $page_id;
+            $service_details_image->meta_key   = $slug;
+            $service_details_image->meta_value = $service_background_image;
+            $service_details_image->save();
+
+            return response()->json(array('status'=>'success','result'=>'successfully added the service information in the jobcircle '),200);
+            
         }
         else
         {
-            //storing service data to page table
-            $title                = 'Services Top Section';
-            $slug                 = str_slug($title);
-            $service_description  = $request->input('service_description');
-            $service              = new Page();
-            $service->title       = $title;
-            $service->slug        = $slug; 
-            $service->description = $service_description;
-            $service->save();
-            $page_id              = $service->id;
-        }
+            $service_page        = new Page();
+            $title               = 'Service';
+            $service_page->title = $title;
+            $service_page->slug  = str_slug($title);
+            $service_page->description = $request->input('service_description');
+            $service_page->save();
 
-        if($request->hasFile('service_background_image')) {
-            $service_background            = $request->file('service_background_image');
-            $service_background_image_name = str_random(20).'.'.$service_background->getClientOriginalExtension();
-            $destinationPath               = $this->image_path;
-            $service_background->move($destinationPath, $service_background_image_name);
-            $service_background_image      = $service_background_image_name;
-        }
-        else
-        {
-            $service_background_image = '';
-        }
+            $page_id = $service_page->id;
+            $slug    = 'services-top-image';
 
-        $service_details_image             = new PageDetails();
-        $service_details_image->page_id    = $page_id;
-        $service_details_image->meta_key   = $slug;
-        $service_details_image->meta_value = $service_background_image;
-        $service_details_image->save();
-       
-        return response()->json(array('status'=>'success','result'=>'successfully added the company information in the jobcircle '),200);
+            if($request->hasFile('service_background_image')) 
+            {
+                $service_background            = $request->file('service_background_image');
+                $service_background_image_name = str_random(20).'.'.$service_background->getClientOriginalExtension();
+                $destinationPath               = $this->image_path;
+                $service_background->move($destinationPath, $service_background_image_name);
+                $service_background_image      = $service_background_image_name;
+
+            }
+            else
+            {
+                $service_background_image = '';
+            }
+
+            $service_details_image             = new PageDetails();
+            $service_details_image->page_id    = $page_id;
+            $service_details_image->meta_key   = $slug;
+            $service_details_image->meta_value = $service_background_image;
+            $service_details_image->save();
+
+            return response()->json(array('status'=>'success','result'=>'successfully added the service information in the jobcircle '),200);
+        }
+        
 
     }
 
@@ -149,8 +179,9 @@ class ServicesController extends Controller
         //
         if($id)
         {
-            $page_id              = $request->input('service_topsection_id');
-            $page_detail_id       = $request->input('service_topsection_page_id');
+            $id                   = $request->input('service_topsection_id');/*this is page service page id*/
+            $page_id              = $request->input('service_topsection_page_id');/*this is a servide page detail id*/
+            //echo "<pre>"; print_r($page_id); echo "</pre>";exit;
             $service_description  = $request->input('service_description');
 
             // find service top section record by id and saving data to that id
@@ -159,7 +190,7 @@ class ServicesController extends Controller
             $service_top_section->save();
 
             //find service top section details record by id and saving data to that id
-            $service_top_section_details             = PageDetails::find($page_detail_id);
+            $service_top_section_details             = PageDetails::find($id);
             //echo "<pre>"; print_r($service_top_section_details); echo "</pre>";exit;
            
             // checking if request has image if not than pass previous image value
@@ -215,6 +246,7 @@ class ServicesController extends Controller
             $slug                 = str_slug($title);
             $services             = new Page();
             $services->title      = $title;
+            $services->description= $request->input('services_description');
             $services->slug       = $slug; 
             $services->save();
 

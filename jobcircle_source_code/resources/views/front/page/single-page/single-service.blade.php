@@ -14,14 +14,7 @@
     <div class="container">
         <div class="sirvice-single-content">
             <h2>{{ $service['title'] }}</h2>
-            <p>{{ $service['description'] }}</p>
-            <ul>
-                <li>Cleaning</li>
-                <li>Laundry</li>
-                <li>Ironging</li>
-                <li>Mopping</li>
-                <li>High Dusting</li>
-            </ul>
+            <p>{!! $service['description'] !!}</p>
             <a class="btn btn-default" href="#">Search Housekeeper Jobs</a>
         </div>
     </div>

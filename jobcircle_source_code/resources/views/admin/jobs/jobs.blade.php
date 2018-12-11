@@ -1,9 +1,6 @@
 @extends('admin.layout.master')
 @section('page_specific_css')
-<!-- datepicker -->
-<link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/assets/pages/advance-elements/css/bootstrap-datetimepicker.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/bower_components/bootstrap-daterangepicker/css/daterangepicker.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/bower_components/datedropper/css/datedropper.min.css')}}">
+
 
 <!--Load the datatable css-->
 <link rel="stylesheet" type="text/css" href="{{ asset('/admin_assets/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
@@ -18,6 +15,21 @@
 
 <!-- File Input css -->
 <link rel="stylesheet" type="text/css" href="{{ asset('/admin_assets/bower_components/file-input/css/fileinput.css') }}">
+<!-- bootstrap timepicker -->
+<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.13.0/themes/prism.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css">
+<link rel="stylesheet" href="{{asset('/front/css/datepicker/pignose.calendar.css')}}">
+<link rel="stylesheet" href="{{asset('/front/css/datepicker/pignose.calendar.min.css')}}">
+<style type="text/css">
+  div#job {
+    z-index: 9999;
+}
+</style>
+
+@endsection
 @section('content')
 <div class="pcoded-content">
 <div class="pcoded-inner-content">
@@ -44,31 +56,19 @@
                           <thead>
                           <tr>
                             <th>{{ __('S.N') }}</th>
-                            <th>{{ __('Title') }}</th>
-                            
-                            <th>{{ __('Salary Type') }}</th>
-                            <th>{{ __('Salary') }}</th>
-                            <th>{{ __('No of Vacancies') }}</th>
-                            
-                            <th>{{ __('Total Working Days In a Week') }}</th>
-                            <th>{{ __('Week Days') }}</th>
-                            <th>{{ __('Start Time') }}</th>
-                            <th>{{ __('End Time') }}</th>
-                            <th>{{ __('Job Display Type') }}</th>
+                            <th>{{ __('Title') }}</th>                                                   
+                            <th>{{ __('No of Application') }}</th>                          
+                            <th>{{ __('Job Display Type') }}</th>    
                             <th>{{ __('Work start Date') }}</th>
                             <th>{{ __('Job Publish Date') }}</th>
-                            <th>{{ __('Job Expiry Date') }}</th>
-                            <th>{{ __('No of Year of Experience') }}</th>
-                            <th>{{ __('Language Preferences') }}</th>
-                            <th>{{ __('Interview Date') }}</th>
-                            <th>{{ __('Interview Time') }}</th>
+                            <th>{{ __('Job Expired Date') }}</th>  
                             <th>{{ __('Status') }}</th>
                             <th>{{ __('Shortlisted Status') }}</th>
                             <th>{{ __('Action') }}</th>
                           </tr>
                           </thead>
                           <tbody>
-                          
+                  
                           </tbody>
                       </table>
                     </div>
@@ -98,101 +98,13 @@
               </button>
           </div>
           <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-12 col-xl-12 m-b-30">
-                   <h4 class="sub-title">{{ __('Title *') }}</h4>
-                   <input type="text" class="form-control job_title" name="job_title" placeholder="Title">
-              </div>   
-            </div>
-            <div class="row">
-               <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Description *') }}</h4>
-                   <textarea  class="form-control job_description" style="height: 100px;" name="job_description" placeholder="Description"></textarea>
-               </div>
-               <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Excerpt *') }}</h4>
-                   <textarea  class="form-control job_excerpt" style="height: 100px;" name="job_excerpt" placeholder="Excerpt"></textarea>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Job Type ID *') }}</h4>
-                   <select name="job_type_id" class="form-control job_type_id">
-                        
-                    </select>
-               </div>
-               <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Job Category ID *') }}</h4>
-                   <select name="job_category_id" class="form-control job_category_id">
-                        
-                    </select>
-               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('Salary Type *') }}</h4>
-                   <select name="salary_type" class="form-control salary_type">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-              </div>  
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('Salary *') }}</h4>
-                   <input type="number" class="form-control salary" name="salary" placeholder="Salary">
-              </div>  
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('No of Vacancies *') }}</h4>
-                   <input type="number" class="form-control no_of_vacancies" name="no_of_vacancies" placeholder="No of Vacancies">
-              </div>   
-            </div>
-            <div class="row">
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('Total Children *') }}</h4>
-                   <input type="number" class="form-control total_children" name="total_children" placeholder="Total Children">
-              </div>  
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('Total Male Children *') }}</h4>
-                   <input type="number" class="form-control total_male_children" name="total_male_children" placeholder="Total Male Children">
-              </div>  
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('Total Female Children *') }}</h4>
-                   <input type="number" class="form-control total_female_children" name="total_female_children" placeholder="Total Female Children">
-              </div>   
-            </div>
-            <div class="row">
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('Total Adults *') }}</h4>
-                   <input type="number" class="form-control total_adults" name="total_adults" placeholder="Total Adults">
-              </div>  
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('Total Working Days In Week *') }}</h4>
-                   <input type="number" class="form-control total_working_days_in_week" name="total_working_days_in_week" placeholder="Total Working Days In Week">
-              </div>  
-              <div class="col-sm-4 col-xl-4 m-b-30">
-                   <h4 class="sub-title">{{ __('WeekDays *') }}</h4>
-                   <input type="number" class="form-control week_days" name="week_days" placeholder="WeekDays">
-              </div>   
-            </div>
-            <div class="row">
-              <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Start Time *') }}</h4>
-                   <input type="text" id="timepicker" width="276" class="form-control start_time" name="start_time" placeholder="Start Time">
-              </div>  
-              <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('End Time *') }}</h4>
-                   <input type="text" class="form-control end_time" name="end_time" placeholder="End Time">
-              </div>  
-            </div>
+            
             <div class="row">
               <div class="col-sm-6 col-xl-6 m-b-30">
                    <h4 class="sub-title">{{ __('Job Display Type *') }}</h4>
                    <select name="job_display_type" class="form-control job_display_type">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        
+                        <option value="0">Hot Job</option>
+                        <option value="1">Featurd Job</option>
                     </select>
               </div>  
               <div class="col-sm-6 col-xl-6 m-b-30">
@@ -210,43 +122,24 @@
                    <input type="text" class="form-control job_expiry_date" name="job_expiry_date" placeholder="Job Expiry Date">
               </div>  
             </div>
-            <div class="row">
-              <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('No of Year of Experience *') }}</h4>
-                   <input type="number" class="form-control no_of_year_of_experience" name="no_of_year_of_experience" placeholder="No of Year of Experience">
-              </div>  
-              <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Language Preferences *') }}</h4>
-                   <input type="text" class="form-control language_preferences" name="language_preferences" placeholder="Language Preferences">
-              </div>  
-            </div>
-            <div class="row">
-              <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Interview Date *') }}</h4>
-                   <input type="text" class="form-control interview_date" name="interview_date" placeholder="Interview Date">
-              </div>  
-              <div class="col-sm-6 col-xl-6 m-b-30">
-                   <h4 class="sub-title">{{ __('Interview Time *') }}</h4>
-                   <input type="text" class="form-control interview_time" name="interview_time" placeholder="Interview Time">
-              </div>  
-            </div>
+            
+            
             <div class="row">
                <div class="col-sm-6 col-xl-6 m-b-30">
                    <h4 class="sub-title">{{ __('Status *') }}</h4>
                    <select name="status" class="form-control status">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="0">Pending</option>
+                        <option value="1">Approved</option>
+                        <option value="2">Hold</option>
+                        <option value="3">Expired</option>
+                        <option value="4">Delete</option>
                     </select>
                </div>
                <div class="col-sm-6 col-xl-6 m-b-30">
                    <h4 class="sub-title">{{ __('Shortlisted Status *') }}</h4>
                    <select name="shortlisted_status" class="form-control shortlisted_status">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="0">Closed</option>
+                        <option value="1">Open</option>
                     </select>
                </div>
             </div>
@@ -261,13 +154,7 @@
 </div>
 @endsection
 @section('page_specific_js')
-<!-- datepickeer -->
 
-<script type="text/javascript" src="{{ asset('/admin_assets/assets/pages/advance-elements/moment-with-locales.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('admin_assets/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('/admin_assets/assets/pages/advance-elements/bootstrap-datetimepicker.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('admin_assets/bower_components/bootstrap-daterangepicker/js/daterangepicker.js')}}"></script>
-<script type="text/javascript" src="{{ asset('admin_assets/bower_components/datedropper/js/datedropper.min.js')}}"></script>
 
 <!-- file input js -->
 <script src="{{ asset('/admin_assets/bower_components/file-input/js/fileinput.js') }}"></script>
@@ -290,6 +177,13 @@
 <!-- Formvalidation -->
 <script type="text/javascript" src="{{ asset('/admin_assets/bower_components/formvalidation/formValidation.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/admin_assets/bower_components/formvalidation/framework/bootstrap.js') }}"></script>
+
+
+<!-- date and  time picker -->
+
+
+
+<script type="text/javascript" src="{{asset('/front/css/datepicker/pignose.calendar.full.min.js')}}"></script>
 
 <!-- Page wise Javascript code -->
 <script type="text/javascript">
@@ -333,23 +227,11 @@ $(document).ready(function () {
                 }
               },
               {"data" :"title",                        "name":"title"},
-              
-              {"data" :"salary_type",                  "name":"salary_type"},
-              {"data" :"salary",                       "name":"salary"},
-              {"data" :"no_of_vacancies",              "name":"no_of_vacancies"},
-              
-              {"data" :"total_working_days_in_week" , "name" :"total_working_days_in_week"},
-              {"data" :"weekdays" ,                   "name" :"weekdays"},
-              {"data" :"start_time" ,                 "name" :"start_time"},
-              {"data" :"end_time" ,                   "name" :"end_time"},
-              {"data" :"job_display_type" ,           "name" :"job_display_type"},
-              {"data" :"work_start_date" ,            "name" :"work_start_date"},
+              {"data" :"no_of_application",            "name":"no_of_application"},
+              {"data" :"job_display_type" ,            "name" :"job_display_type"},            
+              {"data" :"work_start_date" ,            "name" :"work_start_date"},   
               {"data" :"job_publish_date" ,           "name" :"job_publish_date"},
               {"data" :"job_expiry_date" ,            "name" :"job_expiry_date"},
-              {"data" :"no_of_year_of_experience" ,   "name" :"no_of_year_of_experience"},
-              {"data" :"language_preferences" ,       "name" :"language_preferences"},
-              {"data" :"interview_date" ,             "name" :"interview_date"},
-              {"data" :"interview_time" ,             "name" :"interview_time"},
               {"data" :"status" ,                     "name" :"status"},
               {"data" :"shortlisted_status" ,         "name" :"shortlisted_status"},
               {"data" :"action" ,                     "name" :"action"},
@@ -393,55 +275,6 @@ $(document).ready(function () {
         validating: 'fa fa-refresh'
     },
     fields: {
-        'job_title': {
-            validators: {
-                notEmpty: {
-                    message: 'The title  is required'
-                }
-            }
-        },
-        'job_description': {
-            validators: {
-                notEmpty: {
-                    message: 'The description  is required'
-                }
-            }
-        },
-        'job_excerpt': {
-            validators: {
-                notEmpty: {
-                    message: 'The excerpt  is required'
-                }
-            }
-        },
-        'salary_type': {
-            validators: {
-                notEmpty: {
-                    message: 'The salary type  is required'
-                }
-            }
-        },
-        'week_days': {
-            validators: {
-                notEmpty: {
-                    message: 'The week days  is required'
-                }
-            }
-        },
-        'start_time': {
-            validators: {
-                notEmpty: {
-                    message: 'The start time  is required'
-                }
-            }
-        },
-        'end_time': {
-            validators: {
-                notEmpty: {
-                    message: 'The end time  is required'
-                }
-            }
-        },
         'job_display_type': {
             validators: {
                 notEmpty: {
@@ -481,16 +314,11 @@ $(document).ready(function () {
     }
   })
   .on('success.form.fv', function(e) {
+
     e.preventDefault();
-    if(save_method == 'add')
-    {
-        URI = "{{ route('admin.jobs') }}";
-    }
-    // else
-    // {
-    //     var job_type_id  = $(".job_type_id").val();
-    //     URI = "{{ route('admin.job-type') }}" + "/" + job_type_id;
-    // }
+    var job_id  = $('.job_id').val();
+    URI = "{{URL::to('admin/jobs')}}" + "/" + job_id;
+    //alert(job_id)
    
     //get form data
     var result = new FormData($('#job-form')[0]);
@@ -506,23 +334,14 @@ $(document).ready(function () {
         if(data.status == "success")
             {
               $('#job').modal('hide');
-                if(save_method == "add"){
-                  swal({
-                    title: "New Job Type has been added!",
-                    text: "A new  job type   has been added to Job Circle",
-                    type: "success",
-                    closeOnConfirm: true,
-                  });
-               }
-               else
-               {
-                  swal({
-                    title: "Job Type  has been Updated!",
-                    text: "A job type  has been updated to Job Circle",
-                    type: "success",
-                    closeOnConfirm: true,
-                  });
-               } // check for the form submission type
+                
+                swal({
+                  title: "Job has been Updated!",
+                  text: "A job has been updated to Job Circle",
+                  type: "success",
+                  closeOnConfirm: true,
+                });
+                // check for the form submission type
               //table.ajax.reload();
                job_table.ajax.reload();
             }
@@ -531,9 +350,12 @@ $(document).ready(function () {
   });//end of servoce top section  formvalidation
 
   
-  $("body").on('click','.edit-job', function(e){
-    save_method = 'edit';
-    var job_id  = $(this).attr('data-job-id');
+  
+  /*Edit model pop up when edit button is clicked*/
+  $("body").on('click','.job-edit', function(e){
+    e.preventDefault();
+    job_id=$(this).attr('data-job-id');
+    //alert(job_id);
     $.ajax({
           url:"{{URL::to('admin/jobs')}}" + "/" + job_id,
           dataType:"json",
@@ -545,44 +367,107 @@ $(document).ready(function () {
             if(data.status == "success")
             {
               //show  model
-              $(".job_id").val(data.result.id);
-              $(".job_title").val(data.result.title);
-              $(".job_description").val(data.result.description);
-              $(".job_excerpt").val(data.result.excerpt);
-              $(".job_type_id").val(data.result.job_type_id);
-              $(".job_category_id").val(data.result.job_category_id);
-              $(".salary_type").val(data.result.salary_type);
-              $(".salary").val(data.result.salary);
-              $(".no_of_vacancies").val(data.result.no_of_vacancies);
-              $(".total_children").val(data.result.total_children);
-              $(".total_male_children").val(data.result.total_male_children);
-              $(".total_female_children").val(data.result.total_female_children);
-              $(".total_adults").val(data.result.total_adults);
-              $(".total_working_days_in_week").val(data.result.total_working_days_in_week);
-              $(".week_days").val(data.result.weekdays);
-              $(".start_time").val(data.result.start_time);
-              $(".end_time").val(data.result.end_time);
-              $(".job_display_type").val(data.result.job_display_type);
-              $(".work_start_date").val(data.result.work_start_date);
-              $(".job_publish_date").val(data.result.job_publish_date);
-              $(".job_expiry_date").val(data.result.job_expiry_date);
-              $(".no_of_year_of_experience").val(data.result.no_of_year_of_experience);
-              $(".language_preferences").val(data.result.language_preferences);
-              $(".interview_date").val(data.result.interview_date);
-              $(".interview_time").val(data.result.interview_time);
-              $(".status").val(data.result.status);
-              $(".shortlisted_status").val(data.result.shortlisted_status);
+              $('.job_id').val(data.job.id);
+              $(".no_of_vacancies").val(data.job.no_of_vacancies);
+              $(".work_start_date").val(data.job.work_start_date);
+              $(".job_publish_date").val(data.job.job_publish_date);
+              $(".job_expiry_date").val(data.job.job_expiry_date);
+              
 
+              /*status : 0=pending, 1=approved, 2=hold, 3=expired*/
+              $.each($('.status > option'), function(key,value) {
+                if(data.job.status == value.value){
+                  $(this).prop('selected',true);
+                }
+              });
+              $.each($('.job_display_type > option'), function(key,value) {
+                if(data.job.job_display_type == value.value){
+                  $(this).prop('selected',true);
+                }
+              });
 
-              $('.modal-title').text('Update Job');
+              /*shortlisted status : 0=close, 1=open*/
+             
+              $.each($('.shortlisted_status > option'), function(key,value) {
+                if(data.job.shortlisted_status == value.value){
+                  $(this).prop('selected',true);
+                }
+              });
+              $('.modal-footer').css('display', '');/*hiding model footer section*/
+              $('.modal-title').text('Edit Job');
               $('#job').modal('show');
             }
           }
-        })
-  });
+        });
+  });//end of edit model pop up
 
+  /*Deleting job from job circle*/
+  $("body").on('click','.job-delete', function(e){
+    e.preventDefault();
+        job_id=$(this).attr('data-job-id');
+        //alert(job_type_id);
+
+        //show the alert notification
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },function(isConfirm){
+            if(isConfirm){
+                //make ajax request 
+                $.ajax({
+                    url:"{{URL::to('admin/jobs/delete')}}" + "/" + job_id,
+                    type:"POST",
+                    dataType:"Json",
+                    data:{_token:"{{csrf_token()}}"},
+                    success:function(data){
+                        if(data.status == "success")
+                        {
+                            swal("Deleted!", data.message, "success");
+                             job_table.ajax.reload();
+                        }else{
+                            swal('Not allowed!!',data.message,'error');
+                        }
+                    },
+                    error:function(jqXHR,textStatus,errorThrown)
+                    {
+                        if(jqXHR.status == '404')
+                        {
+                            swal('Not found in server','The job  does not exists','error');
+                        }else if(jqXHR.status == '201')
+                        {
+                            swal('Not allowed!!','The job  cannot be deleted.','error');
+                        }
+                    }
+                });
+            }
+            else {
+                swal.close();
+            }
+        });
+  });//end of delete job
+
+
+
+  /*form reset when model closed*/
+
+  
   /*date and time picker */
-  $( "#dropper-dangercolor" ).datepicker();
+ 
+  $('.job_publish_date,.work_start_date,.job_expiry_date').pignoseCalendar({
+      format: 'YYYY-MM-DD' // date format string. (2017-02-02)
+      
+  });
+  
+
+    
+    
   
 });//end of document.ready
 </script>

@@ -8,9 +8,9 @@
                         <h4>Quick Links</h4>
                         <div class="footer-nav">
                             <ul>
-                                <li><a href="{{ asset('/find-a-job') }}">Find a Job</a></li>
-                                <li><a href="{{ asset('/services') }}">Services</a></li>
-                                <li><a href="#">Post a Job</a></li>
+                                <li><a href="{{ url('/find-a-job') }}">Find a Job</a></li>
+                                <li><a href="{{ url('/services') }}">Services</a></li>
+                                <li><a href="{{url('/employer/create-job')}}">Post a Job</a></li>
                                 <li><a href="#">Sign In</a></li>
                             </ul>
                         </div>
@@ -21,8 +21,8 @@
                         <h4>Our Company</h4>
                         <div class="footer-nav">
                             <ul>
-                                <li><a href="{{ asset('/company') }}">Company Profile</a></li>
-                                <li><a href="#">Terms and Conditions</a></li>
+                                <li><a href="{{ url('/company') }}">Company Profile</a></li>
+                                <li><a href="{{url('/terms-conditions')}}">Terms and Conditions</a></li>
                                 <li><a href="#">Privacy Policy</a></li>
                             </ul>
                         </div>
@@ -33,8 +33,8 @@
                         <h4>Support</h4>
                         <div class="footer-nav">
                             <ul>
-                                <li><a href="{{ asset('/faq') }}">FAQ’s</a></li>
-                                <li><a href="{{ asset('/contact') }}">Contact Us</a></li>
+                                <li><a href="{{url('faq')}}">FAQ’s</a></li>
+                                <li><a href="{{url('/contact')}}">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>

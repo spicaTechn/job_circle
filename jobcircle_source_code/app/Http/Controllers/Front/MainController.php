@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Pages\Page;
 use App\Model\Pages\PageDetails;
+use App\Model\Job;
+use App\Model\JobType;
+use App\Model\JobCategory;
 
 class MainController extends Controller
 {
@@ -29,17 +32,34 @@ class MainController extends Controller
 
         endif;
 
-        // get home page slider from db
-        $home_sliders   = Page::where('slug','home-slider')->first();
-        if(!empty($home_sliders))
+        // get home page and home page details content 
+        $home             = Page::where('slug','home')->first();
+        $slider           = '';
+        $background_image = '';
+        if(!empty($home))
         {
-            $home_slider = $home_sliders;
+            $slider           = $home->page_details()->where('meta_key','home-slider')->get();
+            $background_image = $home->page_details()->where('meta_key','home-search-job-background-image')->first();
         }
         else
         {
-            $home_slider = '';
+            $slider = '';
         }
 
+        //echo "<pre>"; print_r($slider); echo "</pre>"; exit;
+
+        $jobs         = Job::where('status','1')->orderBy('created_at', 'desc')->get();
+        
+        if(!empty($jobs))
+        {
+            $job = $jobs;
+            
+        }
+        else
+        {
+            $job = '';
+        }
+        //echo "<pre>"; print_r($job); echo "</pre>"; exit;
 
         return view('front.index')
                     ->with(
@@ -48,7 +68,10 @@ class MainController extends Controller
                             'page_title'      =>    'Home',
                             'company'         =>    $company,
                             'company_detail'  =>    $company_details_unserialize,
-                            'sliders'         =>    $home_slider
+                            'sliders'         =>    $slider,
+                            'background_image'=>    $background_image,
+                            'jobs'            =>    $job,
+                            
                         )
                     );
     }

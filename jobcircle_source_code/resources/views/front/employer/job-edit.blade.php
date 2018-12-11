@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/admin_assets/bower_components/formvalidation/formValidation.min.css') }}">
     <!-- country drop down css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('/front/css/bootstrap-select-country.min.css') }}">
-       <link rel="stylesheet" type="text/css" href="{{ asset('/front/css/nice-select.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/front/css/nice-select.css') }}">
     <!-- datepicker -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/assets/pages/advance-elements/css/bootstrap-datetimepicker.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/bower_components/bootstrap-daterangepicker/css/daterangepicker.css')}}">
@@ -27,46 +27,16 @@
 
 </head>
 <body>
-<header class="header">
-    <div class="login-menu">
-        <ul>
-            <li class="nav-item dropdown">
-                <a class="btn btn-default dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Welcome, Manoj Rana<img class="profile-image" src="{{asset('front/images/testimonial-user.png')}}" alt="user name">
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <ul>
-                        <li><a class="dropdown-item" href="#">MANOJ RANA<span>manojinvisible@gmail.com</span></a></li>
-                        <li><a class="dropdown-item" href="#">Change Password</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-    </div>
-</header>
-<!-- end header -->
-@include('front.include.header')
-<!-- end header -->
+    <!-- This section contain employer top nav -->
+    @include('front.employer.include.header')
+    <!-- This section contain menu of job circle -->
+    @include('front.include.header')
     
 <div class="custumer-dashboard">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <div class="customer-dashboard-sidebar">
-                    <h5>Dashboard </h5>
-                    <div class="dashboard-menu">
-                        <ul>
-                            <!-- <li><a href="#">Dashboard</a></li> -->
-                            <li class="active"><a href="#">Jobs</a></li>
-                            <li><a href="#">Shortlisted</a></li>
-                            <li><a href="#">Edit Profile</a></li>
-                            <li><a href="#">Write a Review</a></li>
-                            <li><a href="#">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <!-- employer dashboad left side bar -->
+            @include('front.employer.include.leftsidebar')
             <!-- customer-dashboard-sidebar -->
             <div class="col-md-9">
                 <div class="customer-dashboard-body">
@@ -92,39 +62,47 @@
                     <div class="Dashboard-edit-wrap register-wrapper">
                        
                             <div class="form-register" id="step-1">
-                            <h4>Get Started </h4>
+                            <h4>Edit Job </h4>
                             <form role="form" name="job-form1" id="job-form1">
                                 @csrf
                                 <div class="form-group">
                                     <label>Job Category</label>
                                     <select name="job_category" class="form-control job_category">
-
-                                        @foreach($job_categories as $job_category)
-                                        <option value="{{ $job_category->id }}">{{ $job_category->name }}</option>
+                                        @foreach($job_categories as $jobCategory)
+                                         @if($jobCategory->id==$job_category->id)
+                                          <option value="{{ $jobCategory->id }}" selected="selected">{{ $jobCategory->name }}</option>
+                                         @else
+                                          <option value="{{ $jobCategory->id }}">{{ $jobCategory->name }}</option>
+                                         @endif
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Job Title</label>
-                                    <input type="text" name="job_title" class="form-control job_title" placeholder="e.g Nanny">
+                                    <input type="text" name="job_title" class="form-control job_title" placeholder="e.g Nanny" value="{{ $job->title }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Location: City or Post Code</label>
-                                    <input type="text" name="location" class="form-control location" placeholder="e.g Birmaingham">
+                                    <input type="text" name="location" class="form-control location" placeholder="e.g Birmaingham" value="{{ $job_location->address }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Country Selection</label>
                                     <!-- <input type="text" class="form-control" placeholder="United Kingdom"> -->
-                                    <select class="selectpicker countrypicker" name="country" data-live-search="true" ></select>
+                                    <select class="selectpicker countrypicker" name="country" data-live-search="true"></select>
                                    <!--  <select class="form-control bfh-countries country" name="country" data-country="US"></select> -->
                                 </div>
                                 <div class="form-group">
                                     <label>Job Type</label>
                                     <div class="inline-form">
-                                        @foreach($job_types as $job_type)
+                                        @foreach($job_types as $jobType)                                   
                                         <div class="form-group form-check">
-                                            <input type="checkbox" value="{{ $job_type->id }}" name="job_type" class="form-check-input job_type" id="job-type1">
-                                            <label class="form-check-label" for="job-type1">{{ $job_type->title }}</label>
+                                            @if($jobType->id==$job_type->id)
+                                            <input type="checkbox" value="{{ $jobType->id }}" name="job_type" class="form-check-input job_type" id="job-type1" checked="checked">
+                                            @else
+                                            <input type="checkbox" value="{{ $jobType->id }}" name="job_type" class="form-check-input job_type" id="job-type1" >
+                                            @endif
+                                            
+                                            <label class="form-check-label" for="job-type1">{{ $jobType->title }}</label>
                                         </div>
                                         @endforeach
                                     </div>
@@ -133,24 +111,41 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Salary Expectation</label>
-                                            <input type="text" name="salary" class="form-control salary" placeholder="$10">
+                                            <input type="text" name="salary" class="form-control salary" placeholder="$10" value="{{ $job->salary }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="hidden" >Salary Expectation</label>
                                             <select class="form-control salary_type" name="salary_type">
+                                                @if($job->salary_type==0)
+                                                <option value="0" selected="selected">per hour</option>
+                                                @else
                                                 <option value="0">per hour</option>
-                                                <option value="1">per week</option>
+                                                @endif
+                                                @if($job->salary_type==1)
+                                                 <option value="1" selected="selected">per week</option>
+                                                @else
+                                                 <option value="1">per week</option>
+                                                @endif
+                                                @if($job->salary_type==2)
+                                                <option value="2" selected="selected">per month</option>
+                                                @else
                                                 <option value="2">per month</option>
-                                                <option value="3">per year</option>
+                                                @endif
+                                                @if($job->salary_type==3)
+                                                <option value="3" selected="selected">per year</option>
+                                                @else
+                                                 <option value="3">per year</option>
+                                                @endif
+                                                
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>How many staffs want to hire?</label>
-                                    <input type="number" name="no_of_staff" class="form-control no_of_staff" placeholder="2,   5">
+                                    <input type="number" name="no_of_staff" class="form-control no_of_staff" placeholder="2,   5" value="{{ $job->no_of_vacancies }}">
                                 </div>
                             
                            <!--  <div class="form-group flex-buttons">
@@ -166,26 +161,26 @@
                             @csrf
                             <div class="form-group">
                                 <label>1) Total number of children</label>
-                                <input type="number" name="total_no_of_children" class="form-control total_no_of_children" placeholder="">
+                                <input type="number" name="total_no_of_children" class="form-control total_no_of_children" placeholder="" value="{{ $job->total_children }}">
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Total male children  </label>
-                                        <input type="number" name="total_male_children" class="form-control total_male_children" placeholder="">
+                                        <input type="number" name="total_male_children" class="form-control total_male_children" placeholder="" value="{{ $job->total_male_children }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Total female children  </label>
-                                        <input type="number" name="total_female_children" class="form-control total_female_children" placeholder="">
+                                        <input type="number" name="total_female_children" class="form-control total_female_children" placeholder="" value="{{ $job->total_female_children }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>2) Total number of adults</label>
-                                <input type="number" class="form-control total_no_of_adults" name="total_no_of_adults" placeholder="">
+                                <input type="number" class="form-control total_no_of_adults" name="total_no_of_adults" placeholder="" value="{{ $job->total_adults }}">
                             </div>
                             
                             <div class="form-group flex-buttons">
@@ -199,38 +194,64 @@
                             <h4>Work Information</h4>
                             <form role="form" name="job-form3" id="job-form3">
                                 @csrf
-                            <div class="form-group">
-                                <label>1) Total working days</label>
-                                <input type="number" name="total_workings_day" class="form-control total_workings_day" placeholder="e.g. 5,   6 ">
-                            </div>
+                            
                              <!-- /*Sunday=1, Monday=2, Tuesday=3, Wednesday=4, Thursday=5, Friday=6, Saturday=7*/ -->
                             <div class="inline-form">
+                                <?php $unserialize = unserialize($job->weekdays); ?>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="1" class="form-check-input" id="day1">
+                                    @if(!empty($unserialize['1']))
+                                    <input type="checkbox" name="1" class="form-check-input" id="day1" checked="checked">
+                                    @else
+                                     <input type="checkbox" name="1" class="form-check-input" id="day1">
+                                    @endif
                                     <label class="form-check-label" for="day1">SUN</label>
                                 </div>
                                 <div class="form-group form-check">
+                                    @if(!empty($unserialize['2']))
+                                    <input type="checkbox" name="2" class="form-check-input" id="day2" checked="checked">
+                                    @else
                                     <input type="checkbox" name="2" class="form-check-input" id="day2">
+                                    @endif
                                     <label class="form-check-label" for="day2">MON</label>
                                 </div>
                                 <div class="form-group form-check">
+                                    @if(!empty($unserialize['3']))
+                                    <input type="checkbox" name="3" class="form-check-input" id="day3" checked="checked">
+                                    @else
                                     <input type="checkbox" name="3" class="form-check-input" id="day3">
+                                    @endif
                                     <label class="form-check-label" for="day3">TUE</label>
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="4" class="form-check-input" id="day4">
+                                    @if(!empty($unserialize['4']))
+                                    <input type="checkbox" name="4" class="form-check-input" id="day4" checked="checked">
+                                    @else
+                                     <input type="checkbox" name="4" class="form-check-input" id="day4">
+                                    @endif
                                     <label class="form-check-label" for="day4">WED</label>
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="5" class="form-check-input" id="day5">
+                                    @if(!empty($unserialize['5']))
+                                    <input type="checkbox" name="5" class="form-check-input" id="day5" checked="checked">
+                                    @else
+                                     <input type="checkbox" name="5" class="form-check-input" id="day5">
+                                    @endif
                                     <label class="form-check-label" for="day5">THU</label>
                                 </div>
                                 <div class="form-group form-check">
+                                    @if(!empty($unserialize['6']))
+                                    <input type="checkbox" name="6" class="form-check-input" id="day6" checked="checked">
+                                    @else
                                     <input type="checkbox" name="6" class="form-check-input" id="day6">
+                                    @endif
                                     <label class="form-check-label" for="day6">FRI</label>
                                 </div>
                                 <div class="form-group form-check">
+                                    @if(!empty($unserialize['7']))
+                                    <input type="checkbox" name="7" class="form-check-input" id="day7" checked="checked">
+                                    @else
                                     <input type="checkbox" name="7" class="form-check-input" id="day7">
+                                    @endif
                                     <label class="form-check-label" for="day7">SAT</label>
                                 </div>
                             </div>
@@ -238,21 +259,21 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Start Time</label>
-                                        <input type="text" name="start_time" class="form-control start_time" placeholder="12:00 PM">
+                                        <input type="text" name="start_time" class="form-control start_time" placeholder="12:00 PM" value="{{ $job->start_time }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>End Time</label>
                                         
-                                        <input type="text" name="end_time" class="form-control end_time" placeholder="4:00 PM">
+                                        <input type="text" name="end_time" class="form-control end_time" placeholder="4:00 PM" value="{{ $job->end_time }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>2) Work Start Day</label>
                                 <!-- <input type="text" class="form-control" placeholder="01-11-2018"> -->
-                                <input type="text" name="work_start_day" class="form-control work_start_day" placeholder="e. g.  09/02/2019">
+                                <input type="text" name="work_start_day" class="form-control work_start_day" placeholder="e. g.  09/02/2019" value="{{ $job->work_start_date }}">
                             </div>
                             
                             <div class="form-group flex-buttons">
@@ -269,16 +290,16 @@
                                 @csrf
                             <div class="form-group">
                                 <label>Describe  about job (Roles and Responsibility)</label>
-                                <textarea class="form-control job_description" name="job_description"></textarea>
+                                <textarea class="form-control job_description" name="job_description" style="min-height: 100px;">{{ $job->description }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Job Experience</label>
-                                <input type="number" name="job_experience" class="form-control job_experience" placeholder="Job Experience">
+                                <input type="number" name="job_experience" class="form-control job_experience" placeholder="Job Experience" value="{{ $job->no_of_year_of_experience }}">
                                 
                             </div>
                             <div class="form-group">
                                 <label>Language Preferences</label>
-                                <input type="text" name="language_preferences" class="form-control language_preferences" placeholder="e. g English">
+                                <input type="text" name="language_preferences" class="form-control language_preferences" placeholder="e. g English" value="{{ $job->language_preferences }}">
                             </div>
                             <div class="form-group">
                                 <label>Best date and time to interview (morning, evening, etc.):</label>
@@ -286,13 +307,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <!-- <label>Start Time</label> -->
-                                            <input type="text" id="text-calendar" name="interview_date" class="form-control interview_date" placeholder="Interview Date" />
+                                            <input type="text" id="text-calendar" name="interview_date" class="form-control interview_date" placeholder="Interview Date" value="{{ $job->interview_date }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <!-- <label>End Time</label> -->
-                                            <input type="text" name="interview_start_time" class="form-control interview_start_time" placeholder="12:00 PM">
+                                            <input type="text" name="interview_start_time" class="form-control interview_start_time" placeholder="12:00 PM" value="{{ $job->interview_time }}">
 
                                         </div>
                                     </div>
@@ -313,7 +334,7 @@
                             </div>
                             <div class="form-group flex-buttons">
                                 <span class="btn btn-default" id="back-3">Back</span>
-                                <button class="btn btn-default" id="submit">Submit</button>
+                                <button class="btn btn-default" id="updateJob" value="{{ $job->id }}">Submit</button>
                             </div>
                             </form>
                         </div>
@@ -356,78 +377,13 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $(function() {
-    $('input.interview_date,.work_start_day').pignoseCalendar({
-        format: 'YYYY-MM-DD' // date format string. (2017-02-02)
-    });
-    });
-    $('.interview_start_time,.start_time,.end_time').mdtimepicker({
-        format: 'h:mm',  
-    });
-    $('.job_type').click(function() {
-        $('.job_type').not(this).prop('checked', false);
-    });
 
-
-  //   $('#job-form1').on('init.field.fv', function(e, data) {
-  //   var $parent = data.element.parents('.form-group'),
-  //       $icon   = $parent.find('.form-control-feedback[data-fv-icon-for="' + data.field + '"]');
-
-  //   $icon.on('click.clearing', function() {
-  //       // Check if the field is valid or not via the icon class
-  //       if ($icon.hasClass('fa fa-remove')) {
-  //           // Clear the fieldf
-  //           data.fv.resetField(data.element);
-  //       }
-  //   });
-  // })
-  // .formValidation({
-  //   framework: 'bootstrap',
-  //   icon: {
-  //       valid: 'fa fa-check',
-  //       invalid: 'fa fa-times',
-  //       validating: 'fa fa-refresh'
-  //   },
-  //   fields: {
-  //       'job_title': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The title  is required'
-  //               }
-  //           }
-  //       },
-  //       'job_description': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The description  is required'
-  //               }
-  //           }
-  //       },
-  //       'location': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The location  is required'
-  //               }
-  //           }
-  //       },
-  //       'country': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The country  is required'
-  //               }
-  //           }
-  //       }
-  //   }
- 
-  // });
-
-    // first next button click
-
+    /*first next button click*/
     $("body").on('click','#next-1', function(e){
         e.preventDefault();
         //var job_title = $('.job_title').val();
         
-        URI = "{{ route('employer.jobStep1') }}";
+        URI = "{{ route('employer.job.update.update1') }}";
         
         //get form data
         var result = new FormData($('#job-form1')[0]);
@@ -448,36 +404,11 @@ $(document).ready(function () {
         });
     });
 
-    // first back button click
-    // $("body").on('click','#back-1', function(e){
-    //     e.preventDefault();
-        
-    //     URI = "{{ route('employer.jobStep1') }}";
-        
-    //     //get form data
-    //     var result = new FormData($('#job-form1')[0]);
-    //     $.ajax({
-    //       url:URI,
-    //       data:result,
-    //       dataType:"json",
-    //       contentType: false,
-    //       processData: false,
-    //       type:"POST",
-    //       success:function(data)
-    //       {
-    //         if(data.status == "success")
-    //         {
-    //            console.log(data);
-    //         }
-    //       }
-    //     });
-    // });
-
-    // second next button click
+    /*second next button click*/
     $("body").on('click','#next-3', function(e){
         e.preventDefault();
         
-        URI = "{{ route('employer.jobStep2') }}";
+        URI = "{{ route('employer.job.update.update2') }}";
         
         //get form data
         var result = new FormData($('#job-form2')[0]);
@@ -498,37 +429,11 @@ $(document).ready(function () {
           }
         });
     });
-    // second back button click
-    $("body").on('click','#back-2', function(e){
-        e.preventDefault();
-        
-        URI = "{{ route('employer.jobStep2') }}";
-        
-        //get form data
-        var result = new FormData($('#job-form2')[0]);
-        
-        $.ajax({
-          url:URI,
-          data:result,
-          dataType:"json",
-          contentType: false,
-          processData: false,
-          type:"POST",
-          success:function(data)
-          {
-            if(data.status == "success")
-            {
-
-            }
-          }
-        });
-    });
-
-    // third next button click
+    /* third next button click */
     $("body").on('click','#next-4', function(e){
         e.preventDefault();
         
-        URI = "{{ route('employer.jobStep3') }}";
+        URI = "{{ route('employer.job.update.update3') }}";
         
         //get form data
         var result = new FormData($('#job-form3')[0]);
@@ -550,37 +455,11 @@ $(document).ready(function () {
           }
         });
     });
-    // third back button click
-    $("body").on('click','#back-3', function(e){
+    
+    $("body").on('click','#updateJob', function(e){
         e.preventDefault();
-        
-        URI = "{{ route('employer.jobStep3') }}";
-        
-        //get form data
-        var result = new FormData($('#job-form3')[0]);
-        
-
-        $.ajax({
-          url:URI,
-          data:result,
-          dataType:"json",
-          contentType: false,
-          processData: false,
-          type:"POST",
-          success:function(data)
-          {
-            if(data.status == "success")
-            {
-                
-            }
-          }
-        });
-    });
-
-
-    $("body").on('click','#submit', function(e){
-        e.preventDefault();
-        URI = "{{ route('employer.store') }}";
+        var job_id = $('#updateJob').val();
+        URI = "{{URL::to('employer/job/update')}}" + "/" + job_id;
         //get form data
         var result = new FormData($('#job-form4')[0]);
         
@@ -597,18 +476,33 @@ $(document).ready(function () {
             {
                 setTimeout(function() {
                           swal({
-                            title:"Job  has been added!",
-                            text:"A job  has been added to Job Circle",
+                            title:"Job  has been updated!",
+                            text:"A job  has been updated to Job Circle",
                             type:"success",
                             closeOnConfirm: true,
                           }, function() {
-                              window.location = "{{route('employer.index')}}";
+                              window.location = "{{route('employer.dashboard')}}";
                           });
                 }, 1000);
             }
           }
         });
     });
+
+
+
+    $(function() {
+    $('input.interview_date,.work_start_day').pignoseCalendar({
+        format: 'YYYY-MM-DD' // date format string. (2017-02-02)
+    });
+    });
+    $('.interview_start_time,.start_time,.end_time').mdtimepicker({
+        format: 'h:mm',  
+    });
+    $('.job_type').click(function() {
+        $('.job_type').not(this).prop('checked', false);
+    });
+
 
     // Country DropDown
     $(".example").each(function(i,e){

@@ -12,7 +12,7 @@
             ?>
             @foreach($page_details as $page_detail)
             <?php $unserialize_value = unserialize($page_detail->meta_value); ?>
-            <div class="card">
+            <div class="card" style="min-height: 278px;">
                 <div class="card-header" id="heading{{ $i }}">
                     <h5 class="mb-0">
                     <button class="btn btn-link {{ ($i == 1) ? '' : 'collapsed' }}" data-toggle="collapse" data-target="#collapse{{ $i }}" aria-expanded="true" aria-controls="collapse{{ $i }}">

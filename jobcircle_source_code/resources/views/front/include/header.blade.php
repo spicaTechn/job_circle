@@ -13,7 +13,7 @@
                 <li class="nav-item"><a href="#" class="nav-link">Register your CV </a></li>
                 <li class="nav-item"><a href="{{ asset('/services') }}" class="nav-link">Services</a></li>
                 <li class="nav-item"><a href="{{ asset('/company') }}" class="nav-link">Company</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Terms & Conditions</a></li>
+                <li class="nav-item"><a href="{{ asset('/terms-conditions') }}" class="nav-link">Terms & Conditions</a></li>
                 <li class="nav-item"><a href="{{ asset('/faq') }}" class="nav-link">FAQ’s</a></li>
                 <li class="nav-item"><a href="{{ asset('/contact') }}" class="nav-link">Contact</a></li>
 

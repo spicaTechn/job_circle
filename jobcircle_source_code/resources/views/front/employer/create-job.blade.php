@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/admin_assets/bower_components/formvalidation/formValidation.min.css') }}">
     <!-- country drop down css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('/front/css/bootstrap-select-country.min.css') }}">
-       <link rel="stylesheet" type="text/css" href="{{ asset('/front/css/nice-select.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/front/css/nice-select.css') }}">
     <!-- datepicker -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/assets/pages/advance-elements/css/bootstrap-datetimepicker.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/bower_components/bootstrap-daterangepicker/css/daterangepicker.css')}}">
@@ -27,46 +27,16 @@
 
 </head>
 <body>
-<header class="header">
-    <div class="login-menu">
-        <ul>
-            <li class="nav-item dropdown">
-                <a class="btn btn-default dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Welcome, Manoj Rana<img class="profile-image" src="{{asset('front/images/testimonial-user.png')}}" alt="user name">
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <ul>
-                        <li><a class="dropdown-item" href="#">MANOJ RANA<span>manojinvisible@gmail.com</span></a></li>
-                        <li><a class="dropdown-item" href="#">Change Password</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-    </div>
-</header>
-<!-- end header -->
-@include('front.include.header')
-<!-- end header -->
+    <!-- This section contain employer top nav -->
+    @include('front.employer.include.header')
+    <!-- This section contain menu of job circle -->
+    @include('front.include.header')
     
 <div class="custumer-dashboard">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <div class="customer-dashboard-sidebar">
-                    <h5>Dashboard </h5>
-                    <div class="dashboard-menu">
-                        <ul>
-                            <!-- <li><a href="#">Dashboard</a></li> -->
-                            <li class="active"><a href="#">Jobs</a></li>
-                            <li><a href="#">Shortlisted</a></li>
-                            <li><a href="#">Edit Profile</a></li>
-                            <li><a href="#">Write a Review</a></li>
-                            <li><a href="#">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <!-- employer dashboad left side bar -->
+            @include('front.employer.include.leftsidebar')
             <!-- customer-dashboard-sidebar -->
             <div class="col-md-9">
                 <div class="customer-dashboard-body">
@@ -199,10 +169,7 @@
                             <h4>Work Information</h4>
                             <form role="form" name="job-form3" id="job-form3">
                                 @csrf
-                            <div class="form-group">
-                                <label>1) Total working days</label>
-                                <input type="number" name="total_workings_day" class="form-control total_workings_day" placeholder="e.g. 5,   6 ">
-                            </div>
+                            
                              <!-- /*Sunday=1, Monday=2, Tuesday=3, Wednesday=4, Thursday=5, Friday=6, Saturday=7*/ -->
                             <div class="inline-form">
                                 <div class="form-group form-check">
@@ -356,78 +323,13 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $(function() {
-    $('input.interview_date,.work_start_day').pignoseCalendar({
-        format: 'YYYY-MM-DD' // date format string. (2017-02-02)
-    });
-    });
-    $('.interview_start_time,.start_time,.end_time').mdtimepicker({
-        format: 'h:mm',  
-    });
-    $('.job_type').click(function() {
-        $('.job_type').not(this).prop('checked', false);
-    });
 
-
-  //   $('#job-form1').on('init.field.fv', function(e, data) {
-  //   var $parent = data.element.parents('.form-group'),
-  //       $icon   = $parent.find('.form-control-feedback[data-fv-icon-for="' + data.field + '"]');
-
-  //   $icon.on('click.clearing', function() {
-  //       // Check if the field is valid or not via the icon class
-  //       if ($icon.hasClass('fa fa-remove')) {
-  //           // Clear the fieldf
-  //           data.fv.resetField(data.element);
-  //       }
-  //   });
-  // })
-  // .formValidation({
-  //   framework: 'bootstrap',
-  //   icon: {
-  //       valid: 'fa fa-check',
-  //       invalid: 'fa fa-times',
-  //       validating: 'fa fa-refresh'
-  //   },
-  //   fields: {
-  //       'job_title': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The title  is required'
-  //               }
-  //           }
-  //       },
-  //       'job_description': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The description  is required'
-  //               }
-  //           }
-  //       },
-  //       'location': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The location  is required'
-  //               }
-  //           }
-  //       },
-  //       'country': {
-  //           validators: {
-  //               notEmpty: {
-  //                   message: 'The country  is required'
-  //               }
-  //           }
-  //       }
-  //   }
- 
-  // });
-
-    // first next button click
-
+    /*first next button click*/
     $("body").on('click','#next-1', function(e){
         e.preventDefault();
         //var job_title = $('.job_title').val();
         
-        URI = "{{ route('employer.jobStep1') }}";
+        URI = "{{ route('employer.create-job.step1') }}";
         
         //get form data
         var result = new FormData($('#job-form1')[0]);
@@ -448,36 +350,11 @@ $(document).ready(function () {
         });
     });
 
-    // first back button click
-    // $("body").on('click','#back-1', function(e){
-    //     e.preventDefault();
-        
-    //     URI = "{{ route('employer.jobStep1') }}";
-        
-    //     //get form data
-    //     var result = new FormData($('#job-form1')[0]);
-    //     $.ajax({
-    //       url:URI,
-    //       data:result,
-    //       dataType:"json",
-    //       contentType: false,
-    //       processData: false,
-    //       type:"POST",
-    //       success:function(data)
-    //       {
-    //         if(data.status == "success")
-    //         {
-    //            console.log(data);
-    //         }
-    //       }
-    //     });
-    // });
-
-    // second next button click
+    /*second next button click*/
     $("body").on('click','#next-3', function(e){
         e.preventDefault();
         
-        URI = "{{ route('employer.jobStep2') }}";
+        URI = "{{ route('employer.create-job.step2') }}";
         
         //get form data
         var result = new FormData($('#job-form2')[0]);
@@ -498,37 +375,11 @@ $(document).ready(function () {
           }
         });
     });
-    // second back button click
-    $("body").on('click','#back-2', function(e){
-        e.preventDefault();
-        
-        URI = "{{ route('employer.jobStep2') }}";
-        
-        //get form data
-        var result = new FormData($('#job-form2')[0]);
-        
-        $.ajax({
-          url:URI,
-          data:result,
-          dataType:"json",
-          contentType: false,
-          processData: false,
-          type:"POST",
-          success:function(data)
-          {
-            if(data.status == "success")
-            {
-
-            }
-          }
-        });
-    });
-
-    // third next button click
+    /* third next button click */
     $("body").on('click','#next-4', function(e){
         e.preventDefault();
         
-        URI = "{{ route('employer.jobStep3') }}";
+        URI = "{{ route('employer.create-job.step3') }}";
         
         //get form data
         var result = new FormData($('#job-form3')[0]);
@@ -550,37 +401,12 @@ $(document).ready(function () {
           }
         });
     });
-    // third back button click
-    $("body").on('click','#back-3', function(e){
-        e.preventDefault();
-        
-        URI = "{{ route('employer.jobStep3') }}";
-        
-        //get form data
-        var result = new FormData($('#job-form3')[0]);
-        
-
-        $.ajax({
-          url:URI,
-          data:result,
-          dataType:"json",
-          contentType: false,
-          processData: false,
-          type:"POST",
-          success:function(data)
-          {
-            if(data.status == "success")
-            {
-                
-            }
-          }
-        });
-    });
-
-
+    
     $("body").on('click','#submit', function(e){
         e.preventDefault();
-        URI = "{{ route('employer.store') }}";
+        
+        URI = "{{ route('employer.create-job.store') }}";
+        
         //get form data
         var result = new FormData($('#job-form4')[0]);
         
@@ -602,13 +428,28 @@ $(document).ready(function () {
                             type:"success",
                             closeOnConfirm: true,
                           }, function() {
-                              window.location = "{{route('employer.index')}}";
+                              window.location = "{{route('employer.dashboard')}}";
                           });
                 }, 1000);
             }
           }
         });
     });
+
+
+
+    $(function() {
+        $('input.interview_date,.work_start_day').pignoseCalendar({
+            format: 'YYYY-MM-DD' // date format string. (2017-02-02)
+        });
+    });
+    $('.interview_start_time,.start_time,.end_time').mdtimepicker({
+        format: 'h:mm',  
+    });
+    $('.job_type').click(function() {
+        $('.job_type').not(this).prop('checked', false);
+    });
+
 
     // Country DropDown
     $(".example").each(function(i,e){

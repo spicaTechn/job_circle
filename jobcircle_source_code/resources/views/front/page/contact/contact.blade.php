@@ -20,20 +20,24 @@
 	            <div class="col-md-6">
 	                <div class="contact-info-section">
 	                    <h2>write to us</h2>
-	                    <form>
+	                    <form name="send-mail" id="send_mail" method="post" action="{{url('/sendbasicemail')}}">
+	                    	@csrf
 	                        <div class="form-group">
-	                            <input type="text" name="" class="form-control" placeholder="Name">
+	                            <input type="text" name="name" class="form-control" placeholder="Name">
 	                        </div>
 	                        <div class="form-group">
-	                            <input type="email" name="" class="form-control" placeholder="Email">
+	                            <input type="email" name="email" class="form-control" placeholder="Email">
 	                        </div>
 	                        <div class="form-group">
-	                            <input type="number" name="" class="form-control" placeholder="Phone">
+	                            <input type="number" name="phone" class="form-control" placeholder="Phone">
 	                        </div>
 	                        <div class="form-group">
-	                            <textarea class="form-control" placeholder="Your Message"></textarea>
+	                            <textarea class="form-control" name="user_message" placeholder="Your Message"></textarea>
 	                        </div>
-	                        <button type="submit" class="btn btn-default">Submit</button>
+	                        @if(Session::has('message'))
+							<p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('message') }}</p>
+							@endif
+	                        <button  type="submit" class="btn btn-default">Submit</button>
 	                    </form>
 	                </div>
 	            </div>
